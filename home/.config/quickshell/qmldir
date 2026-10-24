@@ -32,6 +32,7 @@ singleton TimerService       1.0 services/TimerService.qml
 singleton CavaService        1.0 services/CavaService.qml
 singleton CompositorService  1.0 services/CompositorService.qml
 singleton BluetoothService   1.0 services/BluetoothService.qml
+singleton KeyboardService    1.0 services/KeyboardService.qml
 singleton ClaudeService      1.0 services/ClaudeService.qml
 singleton CodexService       1.0 services/CodexService.qml
 singleton UpdatesService     1.0 services/UpdatesService.qml
@@ -52,6 +53,11 @@ singleton CaptureService     1.0 services/CaptureService.qml
 singleton RecorderService    1.0 services/RecorderService.qml
 singleton ClipboardService   1.0 services/ClipboardService.qml
 singleton EmojiService       1.0 services/EmojiService.qml
+singleton LatexService       1.0 services/LatexService.qml
+singleton LatexImageService  1.0 services/LatexImageService.qml
+singleton ConvertService     1.0 services/ConvertService.qml
+singleton ColourService      1.0 services/ColourService.qml
+singleton SymbolService      1.0 services/SymbolService.qml
 singleton PolkitService      1.0 services/PolkitService.qml
 singleton VmService          1.0 services/VmService.qml
 singleton ServersService     1.0 services/ServersService.qml
@@ -160,6 +166,7 @@ VolumeModule     1.0 bar/modules/VolumeModule.qml
 BrightnessModule 1.0 bar/modules/BrightnessModule.qml
 NetworkModule    1.0 bar/modules/NetworkModule.qml
 BluetoothModule  1.0 bar/modules/BluetoothModule.qml
+KeyboardModule   1.0 bar/modules/KeyboardModule.qml
 WeatherModule    1.0 bar/modules/WeatherModule.qml
 MarketsModule    1.0 bar/modules/MarketsModule.qml
 ScreenTimeModule 1.0 bar/modules/ScreenTimeModule.qml

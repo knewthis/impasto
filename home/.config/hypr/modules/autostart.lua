@@ -14,6 +14,9 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("qs -d")        -- · bar and notifications (quickshell)
     hl.exec_cmd("awww-daemon")  -- · wallpaper
+    -- · input method for pinyin, if installed; the shell opens and closes it
+    --   with the keyboard layout (services/KeyboardService.qml)
+    hl.exec_cmd("command -v fcitx5 >/dev/null && fcitx5 -d")
 end)
 
 -- · plugins (see input.lua, look.lua), built by `./setup plugins`

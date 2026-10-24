@@ -110,6 +110,8 @@ Singleton {
     readonly property alias desktopGround: config.desktopGround
     readonly property alias barSides: config.barSides
     readonly property alias wallpaperTransition: config.wallpaperTransition
+    readonly property alias wallpaperInterval: config.wallpaperInterval
+    readonly property alias wallpaperOrder: config.wallpaperOrder
     readonly property alias greeting: config.greeting
     readonly property alias fontFamily: config.fontFamily
     readonly property alias fontMono: config.fontMono
@@ -136,7 +138,7 @@ Singleton {
     // overrides keyed by mode id, so a new mode needs no new key.
     readonly property var launcherPrefixDefaults: ({
         calculate: "=", desk: ">", windows: "@", timer: "!", clipboard: "'",
-        emoji: ":"
+        emoji: ":", latex: "\\", tex: "~", convert: "%", colour: "#", symbol: ";"
     })
 
     function launcherPrefix(id: string): string {
@@ -562,6 +564,11 @@ Singleton {
         // Row id from `WallpaperService.transitions`; `random` picks anew on
         // each change.
         property string wallpaperTransition: "wipe"
+
+        // Minutes between wallpaper changes; 0 is never. `WallpaperService`
+        // runs the timer, and `wallpaperOrder` is "random" or "sequence".
+        property int wallpaperInterval: 0
+        property string wallpaperOrder: "random"
 
         // Row id from `ThemeService.greetings`; `random` is picked by `fa` on
         // each run.

@@ -32,9 +32,16 @@ ColumnLayout {
     readonly property var view: root.grid ? emojiGrid : resultList
 
     // Loaded here rather than from the search, which runs inside a binding.
-    onModeChanged: {
+    onModeChanged: root.prepare()
+
+    // What a mode needs before it can answer, once per launcher open or less.
+    function prepare(): void {
         if (root.mode.id === "emoji")
             EmojiService.load()
+        else if (root.mode.id === "symbol")
+            SymbolService.load()
+        else if (root.mode.id === "convert")
+            ConvertService.refresh()
     }
 
     signal closed()
@@ -56,8 +63,7 @@ ColumnLayout {
         HyprlandService.loadClients()
         LauncherService.refresh()
         EmojiService.fresh = false
-        if (root.mode.id === "emoji")
-            EmojiService.load()
+        root.prepare()
     }
 
     // Cleared on the way out, not on the way in: the island is sized from the
@@ -209,7 +215,13 @@ ColumnLayout {
                     event.accepted = false
                 }
             }
-            // Escape is handled by the island for every panel.
+            // Escape is handled by the island for every panel. In the LaTeX
+            // mode it copies the text first, then lets the island close.
+            Keys.onEscapePressed: event => {
+                if (root.mode.id === "latex" && root.results.length > 0)
+                    LauncherService.copy(root.results[0].name)
+                event.accepted = false
+            }
 
             // The query can be set from outside (a key that opens the launcher
             // in a mode). Typing breaks the `text` binding, so it is resynced
@@ -312,10 +324,67 @@ ColumnLayout {
     Text {
         Layout.fillWidth: true
         visible: root.results.length === 0 && LauncherService.query !== ""
+            && !LauncherService.showsPreview
         text: root.mode.empty
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.textMuted
+    }
+
+    // ── LATEX IMAGE ─────────────────────────────────────────────────────────
+    //
+    // The render of what is typed, under the field, redrawn a moment after
+    // each key. A mistake shows TeX's own message instead, and the last good
+    // picture stays dimmed behind it, as Overleaf's does.
+    Item {
+        id: preview
+
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        visible: LauncherService.showsPreview
+
+        Image {
+            anchors.fill: parent
+            source: LatexImageService.image
+            visible: LatexImageService.source !== ""
+            fillMode: Image.PreserveAspectFit
+            horizontalAlignment: Image.AlignHCenter
+            verticalAlignment: Image.AlignVCenter
+            cache: false
+            asynchronous: true
+            smooth: true
+            opacity: LatexImageService.error !== "" ? 0.25 : 1
+
+            Behavior on opacity { NumberAnimation { duration: Theme.durationFast } }
+        }
+
+        Text {
+            anchors.fill: parent
+            visible: LatexImageService.source === ""
+                || LatexImageService.error !== ""
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.Wrap
+            text: LatexImageService.source === ""
+                ? Tr.t(root.mode.empty)
+                : LatexImageService.missing
+                    ? Tr.t("LaTeX is not installed. Install texlive and poppler.")
+                    : LatexImageService.error
+            font.family: LatexImageService.source === ""
+                ? Theme.fontFamily : Theme.fontMono
+            font.pixelSize: Theme.fontSizeSmall
+            color: LatexImageService.source === "" ? Theme.textMuted : Theme.red
+        }
+
+        Text {
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            visible: LatexImageService.busy && LatexImageService.error === ""
+            text: "󰑓"
+            font.family: Theme.fontMono
+            font.pixelSize: 14
+            color: Theme.textMuted
+        }
     }
 
     // ── EMOJI ───────────────────────────────────────────────────────────────
@@ -378,7 +447,7 @@ ColumnLayout {
 
         Layout.fillWidth: true
         Layout.fillHeight: true
-        visible: !root.grid
+        visible: !root.grid && !LauncherService.showsPreview
         clip: true
         spacing: LauncherService.rowSpacing
         model: ScriptModel {
@@ -436,6 +505,8 @@ ColumnLayout {
 
                     // An emoji is its own mark, drawn in colour.
                     readonly property string glyph: row.modelData.glyph ?? ""
+                    // A colour is its own mark, as a rounded square.
+                    readonly property string swatch: row.modelData.swatch ?? ""
 
                     Layout.preferredWidth: 26
                     Layout.preferredHeight: 26
@@ -481,7 +552,17 @@ ColumnLayout {
 
                     Rectangle {
                         anchors.fill: parent
+                        visible: badge.swatch !== ""
+                        radius: Theme.radiusSmall
+                        color: badge.swatch
+                        border.width: 1
+                        border.color: Theme.borderIn(QsWindow.window)
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
                         visible: !appIcon.visible && badge.picture === "" && badge.glyph === ""
+                            && badge.swatch === ""
                         radius: width / 2
                         color: Theme.surfaceHoverIn(QsWindow.window)
 

@@ -59,6 +59,8 @@ Singleton {
         { name: "camera",         label: "Camera effects",       description: "Shell · Open the camera effects" },
         { name: "clipboard",      label: "Clipboard history",    description: "Shell · Open the clipboard history" },
         { name: "emoji",          label: "Emoji",                description: "Shell · Pick an emoji" },
+        { name: "latex",          label: "LaTeX to Unicode",     description: "Shell · Turn LaTeX into Unicode" },
+        { name: "latexImage",     label: "LaTeX as an image",    description: "Shell · Render LaTeX as an image" },
         { name: "picker",         label: "Colour picker",        description: "Shell · Pick a colour off the screen" },
         { name: "capture",        label: "Capture",              description: "Shell · Open the capture surface" },
         { name: "captureRegion",  label: "Capture a region",     description: "Shell · Capture a region" },

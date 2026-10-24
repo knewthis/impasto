@@ -650,6 +650,19 @@ QtObject {
             "Copy something again": "Vuelve a copiar algo",
             "Emoji": "Emoji",
             "Copy an emoji": "Copia un emoji",
+            "Turn LaTeX into Unicode": "Convierte LaTeX en Unicode",
+            "Convert": "Convertir",
+            "Units and currencies": "Unidades y monedas",
+            "Colour": "Color",
+            "A colour in every notation": "Un color en cada notación",
+            "Symbol": "Símbolo",
+            "Find a Unicode character": "Busca un carácter Unicode",
+            "Render LaTeX as an image": "Convierte LaTeX en imagen",
+            "Shell · Render LaTeX as an image": "Shell · Convierte LaTeX en imagen",
+            "LaTeX as an image": "LaTeX como imagen",
+            "LaTeX is not installed. Install texlive and poppler.": "LaTeX no está instalado. Instala texlive y poppler.",
+            "Shell · Turn LaTeX into Unicode": "Shell · Convierte LaTeX en Unicode",
+            "LaTeX to Unicode": "LaTeX a Unicode",
             "Recent": "Recientes",
             "Smileys & Emotion": "Caras y emociones",
             "People & Body": "Personas y cuerpo",
@@ -699,6 +712,15 @@ QtObject {
             "Circle": "Círculo",
             "Outer": "Desde fuera",
             "Random": "Aleatorio",
+
+            "Cycle": "Ciclo",
+            "Change the wallpaper on a timer; the palette follows each one.":
+                "Cambia el fondo con un temporizador; la paleta sigue a cada uno.",
+            "Only still wallpapers are cycled: an animated one stays until you change it. Paused in game mode.":
+                "Solo se alternan los fondos estáticos: uno animado se queda hasta que lo cambies. En pausa en el modo juego.",
+            "Change every": "Cambiar cada",
+            "In order": "En orden",
+            "Turn the cycle on above": "Activa el ciclo arriba",
 
             "Greeting": "Saludo",
             "The animation shown beside fastfetch when you run fa.":

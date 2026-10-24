@@ -82,6 +82,17 @@ libpulse                     # pactl, which finds the output a recording hears
 pipewire-pulse               # what pactl talks to
 
 
+# ── LATEX ───────────────────────────────────────────────────────────────────
+
+texlive-basic                # pdflatex, for the launcher's ~ mode
+texlive-latex                # the base classes
+texlive-latexrecommended     # amsmath's neighbours, xcolor
+texlive-latexextra           # standalone, which crops the picture
+texlive-mathscience          # physics, siunitx, mhchem
+texlive-fontsrecommended     # the type the maths is set in
+poppler                      # pdftocairo, which rasterises the page
+
+
 # ── TERMINAL PROGRAMS ───────────────────────────────────────────────────────
 
 fzf                          # .zshrc reaches for it, and fzf-lua needs it
@@ -159,3 +170,12 @@ qemu-desktop                 # the qemu quickemu runs · quickemu is from the AU
 
 lua                          # luac, for ./setup check
 inotify-tools                # ./setup sync --watch, which copies every save
+
+
+# ── PINYIN ──────────────────────────────────────────────────────────────────
+
+fcitx5                       # the input method, opened while the layout is cn
+fcitx5-chinese-addons        # pinyin
+fcitx5-gtk                   # its candidate list in GTK windows
+fcitx5-qt                    # and in Qt ones
+fcitx5-configtool            # its settings, where the one input method is chosen

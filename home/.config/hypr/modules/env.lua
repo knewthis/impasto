@@ -20,6 +20,12 @@ hl.env("XCURSOR_THEME",    "Bibata-Modern-Classic")
 -- · Quickshell draws from its own Theme.qml and is unaffected.
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
+-- · input method, only when fcitx5 is installed (see autostart.lua)
+if io.open("/usr/bin/fcitx5", "r") then
+    hl.env("XMODIFIERS",   "@im=fcitx")
+    hl.env("QT_IM_MODULE", "fcitx")
+end
+
 -- · user folders from user-dirs.dirs, since their names are localised. Parsed
 -- · directly because `xdg-user-dir` returns $HOME for an unset key.
 local home   = os.getenv("HOME")

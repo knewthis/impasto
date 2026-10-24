@@ -197,6 +197,38 @@ QtObject {
         return entry && entry.type !== "" ? entry.type : "wipe"
     }
 
+    // ── CYCLE ───────────────────────────────────────────────────────────────
+    //
+    // Changes the wallpaper every `wallpaperInterval` minutes, through
+    // `apply()` like any other change, so the palette follows each one. Stills
+    // only: an animated wallpaper was chosen on purpose and is left playing.
+    // Paused in game mode, and never started over a change still arriving.
+    readonly property Timer cycler: Timer {
+        interval: Math.max(1, SettingsService.wallpaperInterval) * 60000
+        repeat: true
+        running: SettingsService.arrived
+            && SettingsService.wallpaperInterval > 0
+            && !SettingsService.gameMode
+        onTriggered: root.cycle()
+    }
+
+    // The next still, in listed order or at random, never the one showing.
+    function cycle(): void {
+        if (root.currentMotion !== "" || root.asked !== "" || root.applyProcess.running)
+            return
+        const paths = root.wallpapers.map(entry => entry.path)
+        if (paths.length < 2)
+            return
+        let next
+        if (SettingsService.wallpaperOrder === "sequence") {
+            next = paths[(paths.indexOf(root.currentWallpaper) + 1) % paths.length]
+        } else {
+            const others = paths.filter(path => path !== root.currentWallpaper)
+            next = others[Math.floor(Math.random() * others.length)]
+        }
+        root.apply(next)
+    }
+
     function apply(path: string): void {
         if (!path)
             return
@@ -207,6 +239,10 @@ QtObject {
             root.currentWallpaper = path
         }
         root.asked = path
+        // Any change, a hand-picked one included, starts the interval over:
+        // a timer that ignored it would fire minutes after a manual pick.
+        if (root.cycler.running)
+            root.cycler.restart()
         root.applyProcess.command = [root.script, "set-wallpaper", path,
                                      root.transitionType(SettingsService.wallpaperTransition)]
         root.applyProcess.running = true

@@ -48,6 +48,7 @@ Singleton {
         { id: "brightness",    name: "Brightness",    bar: true,  width: Theme.cardWidth, height: Theme.cardHeight(1, 0) },
         { id: "network",       name: "Network",       bar: true,  width: Theme.cardWidth, height: Theme.cardHeight(2, 0) },
         { id: "bluetooth",     name: "Bluetooth",     bar: true,  width: Theme.cardWidth, height: Theme.cardHeight(3, 0) },
+        { id: "keyboard",      name: "Keyboard",      bar: true,  desk: false, width: Theme.cardWidth, height: Theme.cardHeight(2, 0) },
         { id: "notifications", name: "Notifications", bar: true,  desk: false, width: Theme.cardWidth, height: Theme.cardHeight(7, 0) },
         { id: "weather",       name: "Weather",       bar: true,  width: Theme.cardWidth, height: Theme.cardHeight(0, 50) },
         { id: "markets",       name: "Markets",       bar: true,  width: Theme.cardWidth, height: MarketsService.cardHeight },
@@ -200,6 +201,8 @@ Singleton {
             return NetworkService.icon
         case "bluetooth":
             return BluetoothService.icon
+        case "keyboard":
+            return KeyboardService.icon
         case "volume":
             return AudioService.icon
         case "brightness":
@@ -272,6 +275,8 @@ Singleton {
             return NetworkService.connectionName
         case "bluetooth":
             return BluetoothService.summary
+        case "keyboard":
+            return KeyboardService.code
         case "calendar":
             return Qt.formatDate(root.today.date, "ddd d")
         }
@@ -588,6 +593,9 @@ Singleton {
             return true
         case "bluetooth":
             return BluetoothService.available
+        case "keyboard":
+            // Only with two layouts or more; reading this builds the service.
+            return KeyboardService.available
         case "weather":
             // Builds the service, which runs its first fetch.
             return WeatherService.available

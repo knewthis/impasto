@@ -379,6 +379,12 @@ bind(mainMod .. " + V",         hl.dsp.global("quickshell:clipboard"),  { descri
 -- · emoji, a launcher mode too
 bind(mainMod .. " + period",    hl.dsp.global("quickshell:emoji"),      { description = "Shell · Pick an emoji" })
 
+-- · LaTeX to Unicode, a launcher mode: type, then Enter or Esc copies the text
+bind(mainMod .. " + backslash",    hl.dsp.global("quickshell:latex"),      { description = "Shell · Turn LaTeX into Unicode" })
+
+-- · LaTeX as an image: a live preview under the field, Enter copies the PNG
+bind(mainMod .. " + ALT + backslash", hl.dsp.global("quickshell:latexImage"), { description = "Shell · Render LaTeX as an image" })
+
 -- · colour picker (hyprpicker); the result goes to the clipboard
 bind(mainMod .. " + SHIFT + C", hl.dsp.global("quickshell:picker"),     { description = "Shell · Pick a colour off the screen" })
 

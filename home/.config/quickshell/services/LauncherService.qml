@@ -50,6 +50,26 @@ QtObject {
         { id: "emoji",     prefix: SettingsService.launcherPrefix("emoji"),
           label: "Emoji",     icon: "󰇲",
           hint: "Copy an emoji",       empty: "No emoji by that name" },
+        { id: "latex",     prefix: SettingsService.launcherPrefix("latex"),
+          label: "LaTeX",     icon: "󰊄",
+          hint: "Turn LaTeX into Unicode",
+          empty: "LaTeX — \\alpha + x^2, \\frac{a}{b}" },
+        { id: "tex",       prefix: SettingsService.launcherPrefix("tex"),
+          label: "LaTeX image", icon: "󰐪",
+          hint: "Render LaTeX as an image",
+          empty: "LaTeX — \\int_0^1 x^2\\,dx, or text with $math$ in it" },
+        { id: "convert",   prefix: SettingsService.launcherPrefix("convert"),
+          label: "Convert",   icon: "󰿎",
+          hint: "Units and currencies",
+          empty: "A quantity — 10 km in mi, 20 c to f, 50 eur in usd" },
+        { id: "colour",    prefix: SettingsService.launcherPrefix("colour"),
+          label: "Colour",    icon: "󰏘",
+          hint: "A colour in every notation",
+          empty: "A colour — #222, 34 34 34, rgb(34, 34, 34), hsl(0, 0%, 13%)" },
+        { id: "symbol",    prefix: SettingsService.launcherPrefix("symbol"),
+          label: "Symbol",    icon: "󰬸",
+          hint: "Find a Unicode character",
+          empty: "A name or code — arrow up, partial, U+2202" },
         { id: "apps",      prefix: "",  label: "Apps",      icon: "󰀻",
           hint: "Search applications",
           empty: `No application matches. Type ${SettingsService.launcherPrefix("desk")} for what the shell itself can do.` }
@@ -121,10 +141,15 @@ QtObject {
 
     readonly property int panelWidth: 560
 
+    // The LaTeX image mode shows a picture instead of rows.
+    readonly property bool showsPreview: root.modeFor(root.query).id === "tex"
+    readonly property int previewHeight: 220
+
     // Fixed height with a scrolling list, or (`launcherFits`) sized to the
     // results up to `maxResults` rows.
-    readonly property int panelHeight:
-        SettingsService.launcherFits ? root.heightFor(root.rows) : 520
+    readonly property int panelHeight: root.showsPreview
+        ? root.chromeHeight + root.previewHeight + 2 * Theme.panelPadding
+        : SettingsService.launcherFits ? root.heightFor(root.rows) : 520
 
     // Whitelist: the expression is passed to a JavaScript evaluator.
     readonly property var arithmetic: /^[0-9+\-*/(). %]+$/
@@ -232,6 +257,16 @@ QtObject {
             return root.clipboard(term)
         case "emoji":
             return root.emoji(term)
+        case "latex":
+            return root.latex(raw)
+        case "tex":
+            return root.tex(raw)
+        case "convert":
+            return root.convert(raw)
+        case "colour":
+            return root.colour(raw)
+        case "symbol":
+            return SymbolService.search(raw, root.maxResults)
         }
 
         return root.rank(term).slice(0, root.maxResults)
@@ -389,6 +424,42 @@ QtObject {
         }))
     }
 
+    // One row: the Unicode text. Enter copies it, and so does Escape (the
+    // launcher panel), so typing and leaving is enough.
+    function latex(source: string): var {
+        if (source === "")
+            return []
+        return [{
+            kind: "latex", id: "", icon: "󰊄",
+            name: LatexService.convert(source),
+            subtitle: `${source}  ·  Enter or Esc copies it`
+        }]
+    }
+
+    // `10 km in mi`: one row, or every sibling unit of a bare quantity.
+    function convert(term: string): var {
+        return ConvertService.convert(term).map(item => ({
+            kind: "copy", id: item.value, icon: "󰿎", name: item.name,
+            copy: item.value, subtitle: item.subtitle
+        }))
+    }
+
+    // The colour in every notation, each row with the colour as its mark.
+    function colour(term: string): var {
+        return ColourService.rows(term).map(item => ({
+            kind: "copy", id: item.id, icon: "󰏘", swatch: item.swatch,
+            name: item.name, copy: item.value, subtitle: item.subtitle
+        }))
+    }
+
+    // One row, there so Enter has something to run; the panel shows the
+    // preview, not the row. Enter renders black on white and copies it.
+    function tex(source: string): var {
+        if (source === "")
+            return []
+        return [{ kind: "tex", id: "", icon: "󰐪", name: source, subtitle: "" }]
+    }
+
     // Open windows filtered by title or class. The client list is loaded when
     // the launcher opens.
     function windows(term: string): var {
@@ -454,6 +525,12 @@ QtObject {
             ClipboardService.copy(entry.id)
         else if (entry.kind === "emoji")
             EmojiService.copy(entry.item)
+        else if (entry.kind === "latex")
+            root.copy(entry.name)
+        else if (entry.kind === "copy" || entry.kind === "symbol")
+            root.copy(entry.copy)
+        else if (entry.kind === "tex")
+            LatexImageService.copy(entry.name)
         // `panel` and `mode` entries are handled by the launcher panel: the
         // service does not know about the island, and a mode row keeps the
         // launcher open.

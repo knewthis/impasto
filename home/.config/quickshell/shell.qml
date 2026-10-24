@@ -521,6 +521,18 @@ ShellRoot {
         onPressed: root.openLauncherOn("emoji")
     }
 
+    GlobalShortcut {
+        name: "latex"
+        description: "Open the launcher on LaTeX to Unicode"
+        onPressed: root.openLauncherOn("latex")
+    }
+
+    GlobalShortcut {
+        name: "latexImage"
+        description: "Open the launcher on LaTeX as an image"
+        onPressed: root.openLauncherOn("tex")
+    }
+
     // hyprpicker freezes a screenshot of the screen, so an open panel has to
     // finish closing before it starts.
     GlobalShortcut {

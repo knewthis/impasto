@@ -85,6 +85,39 @@ SettingsSection {
                 }
             }
         }
+
+        SettingGroup {
+            title: Tr.t("Cycle")
+            note: Tr.t("Change the wallpaper on a timer; the palette follows each one.")
+            hint: Tr.t("Only still wallpapers are cycled: an animated one stays until you change it. Paused in game mode.")
+
+            SettingSlider {
+                label: Tr.t("Change every")
+                value: SettingsService.wallpaperInterval
+                from: 0
+                to: 120
+                stepSize: 5
+                unit: " min"
+                reading: SettingsService.wallpaperInterval === 0
+                    ? Tr.t("Off") : `${SettingsService.wallpaperInterval} min`
+                onMoved: value => SettingsService.set("wallpaperInterval", Math.round(value))
+            }
+
+            SettingRow {
+                label: Tr.t("Order")
+                locked: SettingsService.wallpaperInterval === 0
+                reason: Tr.t("Turn the cycle on above")
+
+                SegmentedControl {
+                    options: [
+                        { id: "random", label: Tr.t("Random") },
+                        { id: "sequence", label: Tr.t("In order") }
+                    ]
+                    current: SettingsService.wallpaperOrder
+                    onSelected: id => SettingsService.set("wallpaperOrder", id)
+                }
+            }
+        }
     }
 
     // ── TERMINAL ────────────────────────────────────────────────────────────
