@@ -97,6 +97,7 @@ function y() {
         builtin cd -- "$cwd"
     fi
     rm -f -- "$tmp"
+}
 
 
 
@@ -156,4 +157,5 @@ lava() {
 
 # · machine-specific settings, outside the repository
 [[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
+
 [[ -o interactive ]] && fa
