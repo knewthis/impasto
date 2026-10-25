@@ -17,9 +17,6 @@ hl.on("hyprland.start", function()
     -- · input method for pinyin, if installed; the shell opens and closes it
     --   with the keyboard layout (services/KeyboardService.qml)
     hl.exec_cmd("command -v fcitx5 >/dev/null && fcitx5 -d")
-    hl.exec_cmd("otd-daemon")
-    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE")
-    hl.exec_cmd("systemctl --user start obs.service")
 end)
 
 -- · plugins (see input.lua, look.lua), built by `./setup plugins`
