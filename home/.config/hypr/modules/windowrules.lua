@@ -192,3 +192,10 @@ hl.layer_rule({
     blur         = true,
     ignore_alpha = 0.12,
 })
+
+--hl.window_rule({
+--    name  = "obs-silent",
+--    match = { class = "^com.obsproject.Studio$" },
+--
+--    workspace = "special:obs silent",
+--})
