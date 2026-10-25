@@ -44,14 +44,24 @@ Singleton {
 
     readonly property var nodes: Pipewire.nodes.values
 
+    // Programs the mark leaves out: ones that hold the microphone for as long
+    // as they run, so a mark that never went out would say nothing. Lowercase,
+    // as `nameOf` gives the name. This is a blind spot on purpose: whatever is
+    // listed can listen unannounced.
+    readonly property var ignored: ["obs", "obs studio"]
+
+    function counts(node: var): bool {
+        return root.ignored.indexOf(root.nameOf(node).toLowerCase()) < 0
+    }
+
     // Applications recording the microphone (`AudioService.captures`, which
     // leaves out captures of what plays).
-    readonly property var listeners: AudioService.captures
+    readonly property var listeners: AudioService.captures.filter(node => root.counts(node))
 
     // A video stream reading from somewhere: a camera through PipeWire, or a
     // shared screen.
     readonly property var viewers: root.nodes.filter(node =>
-        root.prop(node, "media.class") === "Stream/Input/Video")
+        root.prop(node, "media.class") === "Stream/Input/Video" && root.counts(node))
 
     // The screen as a source: the portal's node, named after the portal and
     // present only while a screen or a window is being shared.
