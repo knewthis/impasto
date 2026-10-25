@@ -2,7 +2,7 @@
 Description=OBS Studio, started hidden and restarted if closed
 
 [Service]
-ExecStart=/usr/bin/flatpak run com.obsproject.Studio --minimize-to-tray
+ExecStart=/usr/bin/flatpak run com.obsproject.Studio --minimize-to-trays
 Restart=always
 RestartSec=3
 
