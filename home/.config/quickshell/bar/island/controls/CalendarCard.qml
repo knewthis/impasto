@@ -208,6 +208,12 @@ Card {
             rowSpacing: 2
             columnSpacing: 2
 
+            // One seventh of the width less the gaps, given to every header and
+            // day as its preferred width. Left to themselves, columns start
+            // from their widest header letter ("M", "W" against "T", "F") and
+            // the days under the wider letters get wider columns.
+            readonly property real cellWidth: (grid.width - 6 * grid.columnSpacing) / 7
+
             // Wheel pages the month. A WheelHandler, not a MouseArea: a
             // GridLayout would give an Item child a cell and shift every day by
             // one.
@@ -224,6 +230,8 @@ Card {
                 Text {
                     required property string modelData
                     Layout.fillWidth: true
+                    Layout.preferredWidth: grid.cellWidth
+                    Layout.minimumWidth: 0
                     Layout.preferredHeight: 16
                     horizontalAlignment: Text.AlignHCenter
                     text: modelData
@@ -264,6 +272,8 @@ Card {
                     readonly property int pending: cell.key !== "" ? TasksService.pendingOn(cell.key) : 0
 
                     Layout.fillWidth: true
+                    Layout.preferredWidth: grid.cellWidth
+                    Layout.minimumWidth: 0
                     Layout.fillHeight: true
 
                     Rectangle {
