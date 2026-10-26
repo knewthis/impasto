@@ -68,6 +68,8 @@ ShellRoot {
         void SunsetService.available
         // Arms the idle monitors.
         void IdleService.lockAfter
+        // Sends the accent to the lighting, when that is on.
+        void RgbService.enabled
         // Holds every sleep until the lock is up.
         void SessionService.sleepPending
         // Seeds the example profiles on a first install.

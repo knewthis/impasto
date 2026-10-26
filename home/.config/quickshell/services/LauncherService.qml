@@ -70,6 +70,14 @@ QtObject {
           label: "Symbol",    icon: "󰬸",
           hint: "Find a Unicode character",
           empty: "A name or code — arrow up, partial, U+2202" },
+        { id: "install",   prefix: SettingsService.launcherPrefix("install"),
+          label: "Install",   icon: "󰏖",
+          hint: "Install a package",
+          empty: "A package name, two letters or more: repositories and AUR" },
+        { id: "remove",    prefix: SettingsService.launcherPrefix("remove"),
+          label: "Remove",    icon: "󰆴",
+          hint: "Remove an installed package",
+          empty: "No installed package by that name" },
         { id: "apps",      prefix: "",  label: "Apps",      icon: "󰀻",
           hint: "Search applications",
           empty: `No application matches. Type ${SettingsService.launcherPrefix("desk")} for what the shell itself can do.` }
@@ -96,6 +104,20 @@ QtObject {
     property string query: ""
 
     readonly property var results: root.search(root.query)
+
+    // The package modes are fed by `PackagesService`: the install mode drives
+    // its debounced search, the remove mode needs its installed list loaded.
+    // Done here, not in `search()`, which runs inside a binding and must not
+    // write properties.
+    onQueryChanged: {
+        const id = root.modeFor(root.query).id
+        if (id === "install") {
+            PackagesService.view = "find"
+            PackagesService.query = root.termFor(root.query)
+        } else if (id === "remove" && !PackagesService.loaded) {
+            PackagesService.load()
+        }
+    }
 
     // Panel metrics, shared with the layout so the height math stays in sync.
     readonly property int fieldHeight: 34
@@ -267,6 +289,10 @@ QtObject {
             return root.colour(raw)
         case "symbol":
             return SymbolService.search(raw, root.maxResults)
+        case "install":
+            return root.packagesToInstall()
+        case "remove":
+            return root.packagesToRemove(term)
         }
 
         return root.rank(term).slice(0, root.maxResults)
@@ -460,6 +486,38 @@ QtObject {
         return [{ kind: "tex", id: "", icon: "󰐪", name: source, subtitle: "" }]
     }
 
+    // Search results from the repositories and the AUR, as `PackagesService`
+    // answers them. Packages already installed are shown but cannot be picked.
+    function packagesToInstall(): var {
+        return PackagesService.rows.slice(0, root.maxResults).map(row => ({
+            kind: "package-install", id: row.name, icon: "󰏖",
+            name: row.name,
+            subtitle: [row.installed ? "installed" : (row.source === "aur" ? "AUR" : row.source),
+                       row.version, row.description].filter(part => part).join("  ·  "),
+            row: row
+        }))
+    }
+
+    // Installed packages: the ones chosen explicitly while the term is empty,
+    // every one once something is typed.
+    function packagesToRemove(term: string): var {
+        const pool = PackagesService.installed.filter(row => term !== ""
+            ? row.name.toLowerCase().includes(term) : row.explicit)
+        pool.sort((a, b) => {
+            const leadA = a.name.toLowerCase().startsWith(term) ? 0 : 1
+            const leadB = b.name.toLowerCase().startsWith(term) ? 0 : 1
+            return leadA !== leadB ? leadA - leadB
+                : (a.name < b.name ? -1 : 1)
+        })
+        return pool.map(row => ({
+            kind: "package-remove", id: row.name, icon: "󰆴",
+            name: row.name,
+            subtitle: [row.aur ? "AUR" : "", row.version, row.description]
+                .filter(part => part).join("  ·  "),
+            row: row
+        }))
+    }
+
     // Open windows filtered by title or class. The client list is loaded when
     // the launcher opens.
     function windows(term: string): var {
@@ -531,6 +589,12 @@ QtObject {
             root.copy(entry.copy)
         else if (entry.kind === "tex")
             LatexImageService.copy(entry.name)
+        else if (entry.kind === "package-install") {
+            if (PackagesService.installable(entry.row))
+                PackagesService.install(entry.row)
+        }
+        else if (entry.kind === "package-remove")
+            PackagesService.remove(entry.row)
         // `panel` and `mode` entries are handled by the launcher panel: the
         // service does not know about the island, and a mode row keeps the
         // launcher open.

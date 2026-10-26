@@ -67,6 +67,7 @@ singleton TrayService        1.0 services/TrayService.qml
 singleton PrivacyService     1.0 services/PrivacyService.qml
 singleton SunsetService      1.0 services/SunsetService.qml
 singleton IdleService        1.0 services/IdleService.qml
+singleton RgbService         1.0 services/RgbService.qml
 singleton GithubService      1.0 services/GithubService.qml
 singleton PackagesService    1.0 services/PackagesService.qml
 singleton ProfileService     1.0 services/ProfileService.qml

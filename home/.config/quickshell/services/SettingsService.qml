@@ -36,6 +36,7 @@ Singleton {
     readonly property alias barHidden: config.barHidden
     readonly property alias screenCorners: config.screenCorners
     readonly property alias gameMode: config.gameMode
+    readonly property alias rgbSync: config.rgbSync
     readonly property alias barLeft: config.barLeft
     readonly property alias barRight: config.barRight
     readonly property alias islandSummary: config.islandSummary
@@ -138,7 +139,8 @@ Singleton {
     // overrides keyed by mode id, so a new mode needs no new key.
     readonly property var launcherPrefixDefaults: ({
         calculate: "=", desk: ">", windows: "@", timer: "!", clipboard: "'",
-        emoji: ":", latex: "\\", tex: "~", convert: "%", colour: "#", symbol: ";"
+        emoji: ":", latex: "\\", tex: "~", convert: "%", colour: "#", symbol: ";",
+        install: "+", remove: "-"
     })
 
     function launcherPrefix(id: string): string {
@@ -345,7 +347,7 @@ Singleton {
         "userName", "userAvatar", "language", "keyboard", "weatherPlace", "githubUser", "markets",
         "emojiTone",
         "doNotDisturb", "nightLight", "nightTemperature", "barHidden", "desktopHidden",
-        "gameMode",
+        "gameMode", "rgbSync",
         "cameraEnabled", "cameraEffect", "cameraReactions",
         "recorderAudio", "captureShape", "captureKind"
     ]
@@ -537,6 +539,9 @@ Singleton {
         // Game mode: no animations, blur, shadow or glass on the compositor,
         // over whatever the rest of the settings say.
         property bool gameMode: false
+
+        // The accent sent to the keyboard, mouse, memory and case (OpenRGB).
+        property bool rgbSync: false
 
         // Four shadows, one per layer: Hyprland's under the windows, the
         // shell's under the bar, the dock and the desk's widgets.

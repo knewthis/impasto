@@ -246,6 +246,21 @@ SettingsSection {
         }
 
         SettingGroup {
+            title: Tr.t("Lighting")
+            note: Tr.t("The accent on the keyboard, mouse, memory and case.")
+            hint: Tr.t("Sends the accent to every device OpenRGB drives whenever it changes. Needs openrgb; run `openrgb --server` at login so each change is instant.")
+
+            SettingRow {
+                label: Tr.t("Follow the accent")
+
+                ToggleSwitch {
+                    checked: SettingsService.rgbSync
+                    onToggled: checked => SettingsService.set("rgbSync", checked)
+                }
+            }
+        }
+
+        SettingGroup {
             title: Tr.t("The shell")
             note: Tr.t("The island, its panels, the chips — everything Qt draws.")
 

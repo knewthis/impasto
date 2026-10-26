@@ -96,6 +96,8 @@ ColumnLayout {
         switch (kind) {
         case "calculation": return Theme.green
         case "action": return Theme.yellow
+        case "package-install": return Theme.green
+        case "package-remove": return Theme.red
         case "timer": return Theme.blue
         case "window": return Theme.blue
         default: return Theme.accent

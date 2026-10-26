@@ -573,6 +573,9 @@ QtObject {
             "Notch": "Notch",
             "Shadows": "Sombras",
             "Game mode": "Modo juego",
+            "Lighting": "Iluminación",
+            "The accent on the keyboard, mouse, memory and case.": "El acento en el teclado, el ratón, la memoria y la caja.",
+            "Follow the accent": "Seguir el acento",
             "Game mode on": "Modo juego activado",
             "Game mode off": "Modo juego desactivado",
             "Everything still, for a game or a slow machine.": "Todo quieto, para jugar o en un equipo lento.",
@@ -639,6 +642,12 @@ QtObject {
             "Plain text searches applications, and a sigil in front switches mode. Click one to change it.":
                 "El texto normal busca aplicaciones, y un prefijo delante cambia de modo. Haz clic en uno para cambiarlo.",
 
+            "Install": "Instalar",
+            "Install a package": "Instala un paquete",
+            "A package name, two letters or more: repositories and AUR":
+                "Un nombre de paquete, dos letras o más: repositorios y AUR",
+            "Remove an installed package": "Quita un paquete instalado",
+            "No installed package by that name": "Ningún paquete instalado con ese nombre",
             "Calculate": "Calcular",
             "Work something out": "Calcula algo",
             "Desk": "Escritorio",
