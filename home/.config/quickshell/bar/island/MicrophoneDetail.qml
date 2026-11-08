@@ -37,6 +37,7 @@ ColumnLayout {
             glyph: AudioService.sourceIcon
             name: AudioService.sourceReady ? AudioService.outputName(AudioService.source) : ""
             value: AudioService.sourceVolume
+            to: 200
             available: AudioService.sourceReady
             dimmed: AudioService.sourceMuted
             onMoved: value => AudioService.setSourceVolume(value)

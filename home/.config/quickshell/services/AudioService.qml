@@ -145,7 +145,7 @@ Singleton {
 
     function setSourceVolume(percent: int): void {
         if (root.sourceReady)
-            root.source.audio.volume = Math.max(0, Math.min(100, percent)) / 100
+            root.source.audio.volume = Math.max(0, Math.min(200, percent)) / 100
     }
 
     // The rows of the bar's sound card (`VolumeModule`): the two levels, the

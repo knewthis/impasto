@@ -36,7 +36,9 @@ import greeting
 
 XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
 XDG_DATA_HOME = os.environ.get("XDG_DATA_HOME") or os.path.expanduser("~/.local/share")
-XDG_STATE_HOME = os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state")
+XDG_STATE_HOME = os.environ.get("XDG_STATE_HOME") or os.path.expanduser(
+    "~/.local/state"
+)
 XDG_CACHE_HOME = os.environ.get("XDG_CACHE_HOME") or os.path.expanduser("~/.cache")
 
 WALLPAPERS_DIR = os.path.join(XDG_DATA_HOME, "wallpapers")
@@ -81,16 +83,31 @@ TERMINAL_GROUNDS = {
 
 def terminal_background(colors):
     """The tinted near-black this palette's terminal sits on."""
-    return rgb_to_hex(*(channel * TERMINAL_TINT for channel in hex_to_rgb(colors["accent"])))
+    return rgb_to_hex(
+        *(channel * TERMINAL_TINT for channel in hex_to_rgb(colors["accent"]))
+    )
+
 
 # ANSI slot -> palette key. Black and magenta have no source in the palette
 # and keep kitty.conf's values. Cyan carries the accent: it is the only one of
 # the eight with no conventional meaning (red, green and yellow mean error,
 # success and warning), and LS_COLORS uses magenta far more than cyan.
-TERMINAL_NORMAL = (("color1", "red"), ("color2", "green"), ("color3", "yellow"),
-                   ("color4", "blue"), ("color6", "accent"), ("color7", "textMuted"))
-TERMINAL_BRIGHT = (("color9", "red"), ("color10", "green"), ("color11", "yellow"),
-                   ("color12", "blue"), ("color14", "accent"), ("color15", "text"))
+TERMINAL_NORMAL = (
+    ("color1", "red"),
+    ("color2", "green"),
+    ("color3", "yellow"),
+    ("color4", "blue"),
+    ("color6", "accent"),
+    ("color7", "textMuted"),
+)
+TERMINAL_BRIGHT = (
+    ("color9", "red"),
+    ("color10", "green"),
+    ("color11", "yellow"),
+    ("color12", "blue"),
+    ("color14", "accent"),
+    ("color15", "text"),
+)
 # The cursor stays white (set in kitty.conf) so it is visible in any palette.
 TERMINAL_ACCENT = ("selection_background", "active_tab_background")
 
@@ -197,15 +214,40 @@ VESKTOP_MUTED_CONTRAST = 3.0
 VESKTOP_RAMP = 0.60
 
 # The rungs Discord defines (irregular, so not a range).
-VESKTOP_STEPS = (100, 130, 160, 200, 230, 260, 300, 330, 360, 400, 430, 460,
-                 500, 530, 560, 600, 630, 660, 700, 730, 760, 800, 830, 860,
-                 900)
+VESKTOP_STEPS = (
+    100,
+    130,
+    160,
+    200,
+    230,
+    260,
+    300,
+    330,
+    360,
+    400,
+    430,
+    460,
+    500,
+    530,
+    560,
+    600,
+    630,
+    660,
+    700,
+    730,
+    760,
+    800,
+    830,
+    860,
+    900,
+)
 
 # spicetify compiles the colours into the Spotify client. `./setup spotify`
 # patches it once; after that the push refreshes the stylesheets inside it,
 # which the client reads on its next start.
-SPICETIFY_DIR = (os.environ.get("SPICETIFY_CONFIG")
-                 or os.path.join(XDG_CONFIG_HOME, "spicetify"))
+SPICETIFY_DIR = os.environ.get("SPICETIFY_CONFIG") or os.path.join(
+    XDG_CONFIG_HOME, "spicetify"
+)
 SPICETIFY_CONFIG_FILE = os.path.join(SPICETIFY_DIR, "config-xpui.ini")
 SPICETIFY_THEME_DIR = os.path.join(SPICETIFY_DIR, "Themes", "impasto")
 SPICETIFY_COLORS_FILE = os.path.join(SPICETIFY_THEME_DIR, "color.ini")
@@ -223,8 +265,9 @@ SPICETIFY_DISABLED = 0.45
 # the editor loads on its next window without anything being installed.
 VSCODIUM_EXTENSION_DIR = os.path.expanduser("~/.vscode-oss/extensions/impasto")
 VSCODIUM_MANIFEST_FILE = os.path.join(VSCODIUM_EXTENSION_DIR, "package.json")
-VSCODIUM_THEME_FILE = os.path.join(VSCODIUM_EXTENSION_DIR, "themes",
-                                   "impasto-color-theme.json")
+VSCODIUM_THEME_FILE = os.path.join(
+    VSCODIUM_EXTENSION_DIR, "themes", "impasto-color-theme.json"
+)
 
 # The theme's name in the picker and in `workbench.colorTheme`. The push never
 # selects it, so a theme picked by hand stays picked.
@@ -232,8 +275,9 @@ VSCODIUM_LABEL = "Impasto"
 
 # Merged whole by `./setup vscodium`. The pushes only rewrite, in place, the
 # values that follow the palette and the font, and only where they are set.
-VSCODIUM_SETTINGS_FILE = os.path.join(XDG_CONFIG_HOME, "VSCodium", "User",
-                                      "settings.json")
+VSCODIUM_SETTINGS_FILE = os.path.join(
+    XDG_CONFIG_HOME, "VSCodium", "User", "settings.json"
+)
 
 # Read for the monospace family, so the editor uses the same font as kitty.
 SHELL_SETTINGS_FILE = os.path.join(STATE_DIR, "settings.json")
@@ -256,11 +300,18 @@ VSCODIUM_LENS_WASH = 0.18
 # kitty's ANSI slots under VS Code's names. Magenta and bright black are absent
 # from TERMINAL_NORMAL/BRIGHT, so VS Code's defaults fill them.
 VSCODIUM_ANSI = {
-    "color1": "ansiRed", "color2": "ansiGreen", "color3": "ansiYellow",
-    "color4": "ansiBlue", "color6": "ansiCyan", "color7": "ansiWhite",
-    "color9": "ansiBrightRed", "color10": "ansiBrightGreen",
-    "color11": "ansiBrightYellow", "color12": "ansiBrightBlue",
-    "color14": "ansiBrightCyan", "color15": "ansiBrightWhite",
+    "color1": "ansiRed",
+    "color2": "ansiGreen",
+    "color3": "ansiYellow",
+    "color4": "ansiBlue",
+    "color6": "ansiCyan",
+    "color7": "ansiWhite",
+    "color9": "ansiBrightRed",
+    "color10": "ansiBrightGreen",
+    "color11": "ansiBrightYellow",
+    "color12": "ansiBrightBlue",
+    "color14": "ansiBrightCyan",
+    "color15": "ansiBrightWhite",
 }
 
 # Qt applications take their QPalette from the platform theme, here qt6ct
@@ -281,10 +332,28 @@ QT6CT_ICONS = "breeze"
 # QPalette roles in Qt's enum order: qt6ct's format is positional. Accent
 # (Qt 6.6+) is last, so an older Qt ignores it.
 QT_ROLES = (
-    "WindowText", "Button", "Light", "Midlight", "Dark", "Mid", "Text",
-    "BrightText", "ButtonText", "Base", "Window", "Shadow", "Highlight",
-    "HighlightedText", "Link", "LinkVisited", "AlternateBase", "NoRole",
-    "ToolTipBase", "ToolTipText", "PlaceholderText", "Accent",
+    "WindowText",
+    "Button",
+    "Light",
+    "Midlight",
+    "Dark",
+    "Mid",
+    "Text",
+    "BrightText",
+    "ButtonText",
+    "Base",
+    "Window",
+    "Shadow",
+    "Highlight",
+    "HighlightedText",
+    "Link",
+    "LinkVisited",
+    "AlternateBase",
+    "NoRole",
+    "ToolTipBase",
+    "ToolTipText",
+    "PlaceholderText",
+    "Accent",
 )
 
 # Fusion draws buttons as bevels from five shades. They are derived from the
@@ -320,6 +389,7 @@ def gtk_ground(value, accent):
     lit = luminance(*hex_to_rgb(value)) > GTK_LIGHT_ABOVE
     return mix(value, accent, GTK_TINT_LIGHT if lit else GTK_TINT_DARK)
 
+
 # btop wants 48 colours; single-hue meters are ramped from a dimmed version of
 # the hue up to a brightened one.
 BTOP_RAMP_DIM = 0.55
@@ -342,13 +412,22 @@ TERMINAL_STATE_FILL = 0.40
 SYNTAX_SCOPES = (
     ("Comment", "comment", "comment", "italic"),
     ("String", "string", "green", None),
-    ("Number and constant", "constant.numeric, constant.language, constant.character",
-     "yellow", None),
+    (
+        "Number and constant",
+        "constant.numeric, constant.language, constant.character",
+        "yellow",
+        None,
+    ),
     ("Keyword", "keyword, storage, storage.modifier", "accent", None),
     ("Operator and punctuation", "keyword.operator, punctuation", "textMuted", None),
     ("Function", "entity.name.function, support.function", "blue", None),
-    ("Type and class", "entity.name.type, entity.name.class, storage.type, "
-                       "support.type, support.class", "accentHover", None),
+    (
+        "Type and class",
+        "entity.name.type, entity.name.class, storage.type, "
+        "support.type, support.class",
+        "accentHover",
+        None,
+    ),
     ("Tag", "entity.name.tag", "red", None),
     ("Attribute", "entity.other.attribute-name", "yellow", None),
     ("Variable", "variable, variable.parameter", "text", None),
@@ -384,7 +463,6 @@ NVIM_SOCKETS = os.path.join(XDG_RUNTIME_DIR, "nvim.*.0")
 
 # Comments are dimmed further than anything else.
 NVIM_COMMENT_DIM = 0.35
-
 
 
 # imv has no theme or include mechanism, so the push owns its whole config.
@@ -465,7 +543,9 @@ def get_current_wallpaper():
     # Ask the running daemon before giving up; the state file may predate it.
     if shutil.which("awww"):
         try:
-            result = subprocess.run(["awww", "query"], capture_output=True, text=True, timeout=5)
+            result = subprocess.run(
+                ["awww", "query"], capture_output=True, text=True, timeout=5
+            )
             match = re.search(r"image:\s*(/[^\s\n]+)", result.stdout)
             if match and os.path.isfile(match.group(1)):
                 return match.group(1)
@@ -478,12 +558,19 @@ def list_wallpapers():
     if not os.path.isdir(WALLPAPERS_DIR):
         return []
     entries = []
-    for name in sorted(os.listdir(WALLPAPERS_DIR)):
-        if name.startswith("."):
-            continue
-        path = os.path.join(WALLPAPERS_DIR, name)
-        if os.path.isfile(path) and name.lower().endswith(IMAGE_EXTENSIONS):
-            entries.append({"name": pretty_name(name), "path": path})
+    for folder, dirs, files in os.walk(WALLPAPERS_DIR, followlinks=True):
+        # Skip hidden folders and `animated`, which has its own list.
+        dirs[:] = sorted(
+            name
+            for name in dirs
+            if not name.startswith(".") and os.path.join(folder, name) != ANIMATED_DIR
+        )
+        for name in sorted(files):
+            if name.startswith(".") or not name.lower().endswith(IMAGE_EXTENSIONS):
+                continue
+            entries.append(
+                {"name": pretty_name(name), "path": os.path.join(folder, name)}
+            )
     return entries
 
 
@@ -520,18 +607,25 @@ def poster_of(video):
         status = os.stat(video)
     except OSError:
         return ""
-    key = hashlib.sha1(f"{video}\0{status.st_mtime_ns}\0{status.st_size}".encode()).hexdigest()[:16]
+    key = hashlib.sha1(
+        f"{video}\0{status.st_mtime_ns}\0{status.st_size}".encode()
+    ).hexdigest()[:16]
     poster = os.path.join(POSTERS_DIR, f"{key}.png")
     if os.path.isfile(poster):
         return poster
 
     if not shutil.which("ffmpeg"):
-        sys.stderr.write("ffmpeg not found; a video wallpaper needs it for its palette\n")
+        sys.stderr.write(
+            "ffmpeg not found; a video wallpaper needs it for its palette\n"
+        )
         return ""
     os.makedirs(POSTERS_DIR, exist_ok=True)
     try:
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", video, "-frames:v", "1", poster],
-                       capture_output=True, timeout=30)
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-i", video, "-frames:v", "1", poster],
+            capture_output=True,
+            timeout=30,
+        )
     except (OSError, subprocess.SubprocessError) as error:
         sys.stderr.write(f"ffmpeg failed: {error}\n")
         return ""
@@ -562,10 +656,20 @@ def start_motion(video, delay=0.0):
         return False
     command = ["mpvpaper", *MPVPAPER_FLAGS, "--mpv-options", MPV_OPTIONS, "ALL", video]
     try:
-        subprocess.Popen(["sh", "-c", 'sleep "$1"; shift; exec "$@"', MOTION_TAG,
-                          f"{delay:g}", *command],
-                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL, start_new_session=True)
+        subprocess.Popen(
+            [
+                "sh",
+                "-c",
+                'sleep "$1"; shift; exec "$@"',
+                MOTION_TAG,
+                f"{delay:g}",
+                *command,
+            ],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
     except OSError as error:
         sys.stderr.write(f"mpvpaper failed: {error}\n")
         return False
@@ -574,8 +678,12 @@ def start_motion(video, delay=0.0):
 
 def motion_running():
     try:
-        return subprocess.run(["pgrep", "-x", "mpvpaper"], capture_output=True,
-                              timeout=5).returncode == 0
+        return (
+            subprocess.run(
+                ["pgrep", "-x", "mpvpaper"], capture_output=True, timeout=5
+            ).returncode
+            == 0
+        )
     except (OSError, subprocess.SubprocessError):
         return False
 
@@ -593,13 +701,17 @@ def rgb_to_hex(red, green, blue):
 
 def hex_to_rgb(value):
     value = value.lstrip("#")
-    return tuple(int(value[index:index + 2], 16) for index in (0, 2, 4))
+    return tuple(int(value[index : index + 2], 16) for index in (0, 2, 4))
 
 
 def mix(value, other, amount):
     """`value` taken `amount` of the way towards `other`."""
-    return rgb_to_hex(*(one + (two - one) * amount
-                        for one, two in zip(hex_to_rgb(value), hex_to_rgb(other))))
+    return rgb_to_hex(
+        *(
+            one + (two - one) * amount
+            for one, two in zip(hex_to_rgb(value), hex_to_rgb(other))
+        )
+    )
 
 
 def luminance(red, green, blue):
@@ -612,6 +724,7 @@ def relative_luminance(red, green, blue):
     luminance() above is a cheap approximation for ranking swatches; contrast
     uses the WCAG formula.
     """
+
     def channel(value):
         value /= 255
         return value / 12.92 if value <= 0.03928 else ((value + 0.055) / 1.055) ** 2.4
@@ -620,8 +733,13 @@ def relative_luminance(red, green, blue):
 
 
 def contrast_on_terminal(value, background):
-    pair = sorted((relative_luminance(*hex_to_rgb(value)),
-                   relative_luminance(*hex_to_rgb(background))), reverse=True)
+    pair = sorted(
+        (
+            relative_luminance(*hex_to_rgb(value)),
+            relative_luminance(*hex_to_rgb(background)),
+        ),
+        reverse=True,
+    )
     return (pair[0] + 0.05) / (pair[1] + 0.05)
 
 
@@ -650,7 +768,9 @@ def lift(value, minimum, background):
     # Bounded: 100 steps of 0.01 cover the whole lightness range.
     for _ in range(100):
         lightness = min(1.0, max(0.0, lightness + step))
-        candidate = rgb_to_hex(*(c * 255 for c in colorsys.hls_to_rgb(hue, lightness, sat)))
+        candidate = rgb_to_hex(
+            *(c * 255 for c in colorsys.hls_to_rgb(hue, lightness, sat))
+        )
         if contrast_on_terminal(candidate, background) >= minimum:
             return candidate
         if lightness in (0.0, 1.0):
@@ -666,8 +786,14 @@ def brighten(value, background):
     slots.
     """
     hue, lightness, sat = colorsys.rgb_to_hls(*(c / 255 for c in hex_to_rgb(value)))
-    stepped = rgb_to_hex(*(c * 255 for c in colorsys.hls_to_rgb(
-        hue, min(1.0, max(0.0, lightness + 0.12 * away(background))), sat)))
+    stepped = rgb_to_hex(
+        *(
+            c * 255
+            for c in colorsys.hls_to_rgb(
+                hue, min(1.0, max(0.0, lightness + 0.12 * away(background))), sat
+            )
+        )
+    )
     return lift(stepped, MIN_CONTRAST_BRIGHT, background)
 
 
@@ -705,7 +831,9 @@ def build_terminal_palette(colors):
     lines.append(f"selection_foreground {background}")
     lines.append(f"active_tab_foreground {background}")
     lines.append(f"inactive_tab_background {background}")
-    lines.append(f"inactive_tab_foreground {lift(colors['textMuted'], MIN_CONTRAST, background)}")
+    lines.append(
+        f"inactive_tab_foreground {lift(colors['textMuted'], MIN_CONTRAST, background)}"
+    )
     return "\n".join(lines) + "\n"
 
 
@@ -717,28 +845,51 @@ def push_terminal_palette(colors):
 
     kitten = shutil.which("kitten")
     if not kitten:
-        sys.stderr.write("kitten not found; the palette applies to new terminals only\n")
+        sys.stderr.write(
+            "kitten not found; the palette applies to new terminals only\n"
+        )
         return
 
     for socket_path in sorted(glob.glob(KITTY_SOCKETS)):
         # --configured: later windows of the same instance get it too.
         result = subprocess.run(
-            [kitten, "@", "--to", f"unix:{socket_path}", "set-colors", "--all",
-             "--configured", TERMINAL_PALETTE_FILE],
-            capture_output=True, text=True)
+            [
+                kitten,
+                "@",
+                "--to",
+                f"unix:{socket_path}",
+                "set-colors",
+                "--all",
+                "--configured",
+                TERMINAL_PALETTE_FILE,
+            ],
+            capture_output=True,
+            text=True,
+        )
         if result.returncode != 0:
             # A stale socket from a closed terminal is normal; keep going.
-            sys.stderr.write(f"{os.path.basename(socket_path)}: "
-                             f"{result.stderr.strip()}\n")
+            sys.stderr.write(
+                f"{os.path.basename(socket_path)}: {result.stderr.strip()}\n"
+            )
             continue
         # The palette carries the tinted background; a ground with its own
         # puts it back over it.
         background = ground_background()
         if background:
             subprocess.run(
-                [kitten, "@", "--to", f"unix:{socket_path}", "set-colors", "--all",
-                 "--configured", f"background={background}"],
-                capture_output=True, text=True)
+                [
+                    kitten,
+                    "@",
+                    "--to",
+                    f"unix:{socket_path}",
+                    "set-colors",
+                    "--all",
+                    "--configured",
+                    f"background={background}",
+                ],
+                capture_output=True,
+                text=True,
+            )
 
 
 def ground_background():
@@ -778,18 +929,23 @@ def push_terminal_ground(style):
         target = ["--to", f"unix:{socket_path}"]
         result = subprocess.run(
             [kitten, "@", *target, "set-background-opacity", "--all", f"{opacity:.2f}"],
-            capture_output=True, text=True)
+            capture_output=True,
+            text=True,
+        )
         if result.returncode != 0:
             # A stale socket from a closed terminal is normal; keep going.
-            sys.stderr.write(f"{os.path.basename(socket_path)}: "
-                             f"{result.stderr.strip()}\n")
+            sys.stderr.write(
+                f"{os.path.basename(socket_path)}: {result.stderr.strip()}\n"
+            )
             continue
         # Back to the palette's tinted background, or over it with the
         # ground's own.
         colors = [f"background={background}"] if background else [TERMINAL_PALETTE_FILE]
         subprocess.run(
             [kitten, "@", *target, "set-colors", "--all", "--configured", *colors],
-            capture_output=True, text=True)
+            capture_output=True,
+            text=True,
+        )
 
 
 def write_greetings(colors):
@@ -799,8 +955,10 @@ def write_greetings(colors):
     renders in the background, since all four scenes take about five seconds.
     """
     ground = terminal_background(colors)
-    paint = {key: lift(colors[key], MIN_CONTRAST, ground)
-             for key in ("accent", "green", "yellow", "red", "blue")}
+    paint = {
+        key: lift(colors[key], MIN_CONTRAST, ground)
+        for key in ("accent", "green", "yellow", "red", "blue")
+    }
     paint.update(ground=ground, text=colors["text"], muted=colors["textMuted"])
     greeting.push(paint)
 
@@ -818,8 +976,11 @@ def build_btop_theme(colors):
         return lift(colors[key], MIN_CONTRAST, background)
 
     def ramp(key):
-        return (mix(colors[key], background, BTOP_RAMP_DIM),
-                on(key), brighten(colors[key], background))
+        return (
+            mix(colors[key], background, BTOP_RAMP_DIM),
+            on(key),
+            brighten(colors[key], background),
+        )
 
     text, muted, accent = on("text"), on("textMuted"), on("accent")
     inactive = mix(muted, background, TERMINAL_DIM)
@@ -837,69 +998,114 @@ def build_btop_theme(colors):
     emptying = tuple(reversed(filling))
 
     groups = [
-        ("""The ground and the type on it. `main_bg` is the colour kitty is set
+        (
+            """The ground and the type on it. `main_bg` is the colour kitty is set
         to, so turning `theme_background` on in btop.conf gets the terminal's
         own black rather than a hole; with it off, which is how this ships,
         btop never draws it at all.""",
-         [("main_bg", background), ("main_fg", text),
-          ("title", brighten(colors["text"], background)), ("hi_fg", accent),
-          ("inactive_fg", inactive), ("graph_text", muted)]),
-
-        ("""The selected process, in the one pair the shell already keeps for
+            [
+                ("main_bg", background),
+                ("main_fg", text),
+                ("title", brighten(colors["text"], background)),
+                ("hi_fg", accent),
+                ("inactive_fg", inactive),
+                ("graph_text", muted),
+            ],
+        ),
+        (
+            """The selected process, in the one pair the shell already keeps for
         type on an accent — so the row is the same object the island draws
         when it highlights something.""",
-         [("selected_bg", colors["accent"]), ("selected_fg", colors["accentText"]),
-          ("proc_misc", accent)]),
-
-        ("""The rest of the process box's states, and they are quieter than
+            [
+                ("selected_bg", colors["accent"]),
+                ("selected_fg", colors["accentText"]),
+                ("proc_misc", accent),
+            ],
+        ),
+        (
+            """The rest of the process box's states, and they are quieter than
         the selection on purpose: the cursor is where you are and these are
         what the list is doing. A followed process and the banner saying so
         take the accent, a paused list takes the red, and both are the ground
         lifted towards it rather than filled with it.""",
-         [("followed_bg", following), ("followed_fg", state_fg),
-          ("proc_follow_bg", following), ("proc_pause_bg", paused),
-          ("proc_banner_bg", raised), ("proc_banner_fg", state_fg)]),
-
-        ("""One line colour for all four boxes and for the ground behind every
+            [
+                ("followed_bg", following),
+                ("followed_fg", state_fg),
+                ("proc_follow_bg", following),
+                ("proc_pause_bg", paused),
+                ("proc_banner_bg", raised),
+                ("proc_banner_fg", state_fg),
+            ],
+        ),
+        (
+            """One line colour for all four boxes and for the ground behind every
         meter. Stock themes give each box its own hue; this shell draws one
         hairline and the boxes are chrome, so they are all drawn in it.""",
-         [("cpu_box", line), ("mem_box", line), ("net_box", line),
-          ("proc_box", line), ("div_line", line), ("meter_bg", line)]),
-
-        ("""Temperature and load: filling is the reading getting worse.""",
-         [(f"{name}_{stop}", value)
-          for name in ("temp", "cpu")
-          for stop, value in zip(("start", "mid", "end"), filling)]),
-
-        ("""Memory. Used fills the way load does; free and available are the
+            [
+                ("cpu_box", line),
+                ("mem_box", line),
+                ("net_box", line),
+                ("proc_box", line),
+                ("div_line", line),
+                ("meter_bg", line),
+            ],
+        ),
+        (
+            """Temperature and load: filling is the reading getting worse.""",
+            [
+                (f"{name}_{stop}", value)
+                for name in ("temp", "cpu")
+                for stop, value in zip(("start", "mid", "end"), filling)
+            ],
+        ),
+        (
+            """Memory. Used fills the way load does; free and available are the
         same three hues read backwards, because a full bar there is the
         machine being fine. Cached is neither, so it takes the blue and is
         ramped rather than graded.""",
-         [(f"used_{stop}", value) for stop, value in zip(("start", "mid", "end"), filling)] +
-         [(f"{name}_{stop}", value)
-          for name in ("free", "available")
-          for stop, value in zip(("start", "mid", "end"), emptying)] +
-         [(f"cached_{stop}", value)
-          for stop, value in zip(("start", "mid", "end"), ramp("blue"))]),
-
-        ("""The two directions of the network, in the accent and the colour the
+            [
+                (f"used_{stop}", value)
+                for stop, value in zip(("start", "mid", "end"), filling)
+            ]
+            + [
+                (f"{name}_{stop}", value)
+                for name in ("free", "available")
+                for stop, value in zip(("start", "mid", "end"), emptying)
+            ]
+            + [
+                (f"cached_{stop}", value)
+                for stop, value in zip(("start", "mid", "end"), ramp("blue"))
+            ],
+        ),
+        (
+            """The two directions of the network, in the accent and the colour the
         palette keeps beside it — one hue at two weights, which is what the
         overview does with a workspace you are on and one you are going to.
         Nothing here is a warning: traffic is not good or bad.""",
-         [(f"download_{stop}", value)
-          for stop, value in zip(("start", "mid", "end"), ramp("accent"))] +
-         [(f"upload_{stop}", value)
-          for stop, value in zip(("start", "mid", "end"), ramp("accentHover"))]),
-
-        ("""And the process list, which fades down the screen rather than
+            [
+                (f"download_{stop}", value)
+                for stop, value in zip(("start", "mid", "end"), ramp("accent"))
+            ]
+            + [
+                (f"upload_{stop}", value)
+                for stop, value in zip(("start", "mid", "end"), ramp("accentHover"))
+            ],
+        ),
+        (
+            """And the process list, which fades down the screen rather than
         colouring anything: the top of it is the text colour and the bottom is
         the inactive grey.""",
-         [("process_start", text), ("process_mid", muted), ("process_end", inactive)]),
+            [
+                ("process_start", text),
+                ("process_mid", muted),
+                ("process_end", inactive),
+            ],
+        ),
     ]
 
     lines = [
         "# GENERATED by scripts/theme_manager.py on every palette change.",
-        "# Read by btop as `color_theme = \"impasto\"`; edits here are lost at the",
+        '# Read by btop as `color_theme = "impasto"`; edits here are lost at the',
         "# next theme switch.",
         "#",
         "# btop wants forty-eight colours and a palette here carries thirteen.",
@@ -925,9 +1131,11 @@ def write_program_theme(program, root, path, build, colors):
     if not shutil.which(program):
         return False
     if os.path.islink(root):
-        sys.stderr.write(f"{root} is a symlink, so {program}'s theme is "
-                         f"not written: run `./setup sync`, which makes "
-                         f"it a real directory\n")
+        sys.stderr.write(
+            f"{root} is a symlink, so {program}'s theme is "
+            f"not written: run `./setup sync`, which makes "
+            f"it a real directory\n"
+        )
         return False
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -967,10 +1175,12 @@ def build_cava_theme(colors):
         "",
         "gradient = 1",
     ]
-    stops = [mix(colors["accent"], background, CAVA_GRADIENT_DIM),
-             lift(colors["accent"], MIN_CONTRAST, background),
-             lift(colors["accentHover"], MIN_CONTRAST, background),
-             brighten(colors["accentHover"], background)]
+    stops = [
+        mix(colors["accent"], background, CAVA_GRADIENT_DIM),
+        lift(colors["accent"], MIN_CONTRAST, background),
+        lift(colors["accentHover"], MIN_CONTRAST, background),
+        brighten(colors["accentHover"], background),
+    ]
     for index, stop in enumerate(stops, start=1):
         lines.append(f"gradient_color_{index} = '{stop}'")
     return "\n".join(lines) + "\n"
@@ -982,8 +1192,9 @@ def write_cava_theme(colors):
     SIGUSR2 is cava's "reload colors only"; it does not interrupt the shell's
     own raw-output cava.
     """
-    if not write_program_theme("cava", CAVA_DIR, CAVA_THEME_FILE,
-                               build_cava_theme, colors):
+    if not write_program_theme(
+        "cava", CAVA_DIR, CAVA_THEME_FILE, build_cava_theme, colors
+    ):
         return
     if shutil.which("pkill"):
         # Exit status 1 just means no cava was running.
@@ -1003,8 +1214,11 @@ def build_yazi_flavor(colors):
 
     def style(**parts):
         written = [f'{key} = "{parts[key]}"' for key in ("fg", "bg") if parts.get(key)]
-        written += [f"{key} = true" for key in
-                    ("bold", "italic", "underline", "reversed", "crossed") if parts.get(key)]
+        written += [
+            f"{key} = true"
+            for key in ("bold", "italic", "underline", "reversed", "crossed")
+            if parts.get(key)
+        ]
         return "{ " + ", ".join(written) + " }" if written else "{ }"
 
     def on(key):
@@ -1042,154 +1256,162 @@ def build_yazi_flavor(colors):
     # Text on a coloured fill: the terminal ground if it contrasts enough,
     # then black, then lifted text.
     def over(fill):
-        for candidate in (background, "#000000",
-                          lift(colors["text"], MIN_CONTRAST, fill)):
+        for candidate in (
+            background,
+            "#000000",
+            lift(colors["text"], MIN_CONTRAST, fill),
+        ):
             if contrast_on_terminal(candidate, fill) >= MIN_CONTRAST:
                 return candidate
         return lift(colors["text"], MIN_CONTRAST, fill)
 
     caps = f'{{ open = "{YAZI_CAP_OPEN}", close = "{YAZI_CAP_CLOSE}" }}'
-    return "\n".join([
-        "# GENERATED by scripts/theme_manager.py on every palette change.",
-        "# Read by yazi as `[flavor] dark = \"impasto\"`; edits here are lost at",
-        "# the next theme switch, and yazi has to be reopened to see it.",
-        "#",
-        "# Backgrounds are set only where something has to sit on one, so the",
-        "# blurred desktop under the terminal comes through everywhere else.",
-        "",
-        "[mgr]",
-        f"cwd = {style(fg=accent, bold=True)}",
-        "",
-        f"find_keyword = {style(fg=yellow, bold=True, underline=True)}",
-        f"find_position = {style(fg=dim, bold=True, italic=True)}",
-        f"symlink_target = {style(fg=listed('textMuted'), italic=True)}",
-        "",
-        f"marker_copied = {style(fg=green, bg=green)}",
-        f"marker_cut = {style(fg=red, bg=red)}",
-        f"marker_marked = {style(fg=marked, bg=marked)}",
-        f"marker_selected = {style(fg=accent, bg=accent)}",
-        "",
-        f"count_copied = {style(fg=over(green), bg=green)}",
-        f"count_cut = {style(fg=over(red), bg=red)}",
-        f"count_selected = {style(fg=colors['accentText'], bg=colors['accent'])}",
-        "",
-        'border_symbol = "│"',
-        f"border_style = {style(fg=line)}",
-        "",
-        "# The cursor, in both panes: the ground lifted, and towards the accent",
-        "# where the cursor actually is.",
-        "[indicator]",
-        f"current = {style(bg=cursor)}",
-        f"parent = {style(bg=row)}",
-        f"preview = {style(underline=True)}",
-        "",
-        "[tabs]",
-        f"active = {style(fg=on_chip('text'), bg=chip, bold=True)}",
-        f"inactive = {style(fg=on_row('textMuted'), bg=row)}",
-        f"sep_inner = {caps}",
-        f"sep_outer = {caps}",
-        "",
-        "[mode]",
-        f"normal_main = {style(fg=on_chip('text'), bg=chip, bold=True)}",
-        f"normal_alt = {style(fg=on_row('textMuted'), bg=row)}",
-        "",
-        f"select_main = {style(fg=colors['accentText'], bg=colors['accent'], bold=True)}",
-        f"select_alt = {style(fg=accent, bg=select_fill)}",
-        "",
-        f"unset_main = {style(fg=over(colors['yellow']), bg=colors['yellow'], bold=True)}",
-        f"unset_alt = {style(fg=yellow, bg=unset_fill)}",
-        "",
-        "[status]",
-        f"overall = {style(fg=text)}",
-        f"sep_left = {caps}",
-        f"sep_right = {caps}",
-        "",
-        f"perm_sep = {style(fg=dim)}",
-        f"perm_type = {style(fg=blue)}",
-        f"perm_read = {style(fg=yellow)}",
-        f"perm_write = {style(fg=red)}",
-        f"perm_exec = {style(fg=green)}",
-        "",
-        f"progress_label = {style(fg=lift(colors['text'], MIN_CONTRAST, select_fill), bold=True)}",
-        f"progress_normal = {style(fg=accent, bg=select_fill)}",
-        f"progress_error = {style(fg=over(red), bg=red)}",
-        "",
-        "[which]",
-        f"border = {style(fg=line)}",
-        "cols = 3",
-        f"mask = {style(bg=row)}",
-        f"cand = {style(fg=accent, bold=True)}",
-        f"rest = {style(fg=muted)}",
-        f"desc = {style(fg=dim, italic=True)}",
-        f"separator_style = {style(fg=line)}",
-        "",
-        "[confirm]",
-        f"border = {style(fg=line)}",
-        f"title = {style(fg=accent, bold=True)}",
-        f"body = {style(fg=text)}",
-        f"list = {style(fg=muted)}",
-        f"btn_yes = {style(fg=colors['accentText'], bg=colors['accent'], bold=True)}",
-        f"btn_no = {style(fg=on_row('textMuted'), bg=row)}",
-        "",
-        "[spot]",
-        f"border = {style(fg=line)}",
-        f"title = {style(fg=accent, bold=True)}",
-        f"tbl_col = {style(fg=muted)}",
-        f"tbl_cell = {style(bg=row)}",
-        "",
-        "[notify]",
-        f"title_info = {style(fg=blue)}",
-        f"title_warn = {style(fg=yellow)}",
-        f"title_error = {style(fg=red)}",
-        "",
-        "[pick]",
-        f"border = {style(fg=line)}",
-        f"active = {style(fg=accent, bold=True)}",
-        f"inactive = {style(fg=muted)}",
-        "",
-        "[input]",
-        f"border = {style(fg=line)}",
-        f"title = {style(fg=accent, bold=True)}",
-        f"value = {style(fg=text)}",
-        f"selected = {style(bg=row)}",
-        "",
-        "[cmp]",
-        f"border = {style(fg=line)}",
-        f"active = {style(fg=on_row('text'), bg=row)}",
-        f"inactive = {style(fg=muted)}",
-        "",
-        "[tasks]",
-        f"border = {style(fg=line)}",
-        f"title = {style(fg=accent, bold=True)}",
-        f"hovered = {style(fg=accent, bold=True)}",
-        "",
-        "[help]",
-        f"border = {style(fg=line)}",
-        f"chord = {style(fg=accent)}",
-        f"action = {style(fg=text)}",
-        f"hovered = {style(bg=row, bold=True)}",
-        "",
-        "# The mime patterns are yazi's own shape — `**/` and a brace list — and",
-        "# not the bare `image/*` an older flavour would use, which matches",
-        "# nothing here and says nothing about it.",
-        "[filetype]",
-        "rules = [",
-        f'  {{ mime = "**/image/*", fg = "{listed("accentHover")}" }},',
-        f'  {{ mime = "**/{{audio,video}}/*", fg = "{listed("yellow")}" }},',
-        f'  {{ mime = "**/application/{{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,'
-        f'compress,archive,cpio,arj,xar,ms-cab*}}", fg = "{listed("red")}" }},',
-        f'  {{ mime = "**/application/{{pdf,doc,rtf}}", fg = "{listed("blue")}" }},',
-        "",
-        f'  {{ mime = "vfs/{{absent,stale}}", fg = "{dim}", crossed = true }},',
-        f'  {{ url = "*", is = "orphan", fg = "{dim}", crossed = true }},',
-        f'  {{ url = "*", is = "dummy", fg = "{dim}", crossed = true }},',
-        f'  {{ url = "*/", is = "dummy", fg = "{dim}", crossed = true }},',
-        f'  {{ url = "*", is = "exec", fg = "{listed("green")}" }},',
-        "",
-        f'  {{ url = "*", fg = "{listed("textMuted")}" }},',
-        f'  {{ url = "*/", fg = "{listed("text")}" }}',
-        "]",
-    ]) + "\n"
+    return (
+        "\n".join(
+            [
+                "# GENERATED by scripts/theme_manager.py on every palette change.",
+                '# Read by yazi as `[flavor] dark = "impasto"`; edits here are lost at',
+                "# the next theme switch, and yazi has to be reopened to see it.",
+                "#",
+                "# Backgrounds are set only where something has to sit on one, so the",
+                "# blurred desktop under the terminal comes through everywhere else.",
+                "",
+                "[mgr]",
+                f"cwd = {style(fg=accent, bold=True)}",
+                "",
+                f"find_keyword = {style(fg=yellow, bold=True, underline=True)}",
+                f"find_position = {style(fg=dim, bold=True, italic=True)}",
+                f"symlink_target = {style(fg=listed('textMuted'), italic=True)}",
+                "",
+                f"marker_copied = {style(fg=green, bg=green)}",
+                f"marker_cut = {style(fg=red, bg=red)}",
+                f"marker_marked = {style(fg=marked, bg=marked)}",
+                f"marker_selected = {style(fg=accent, bg=accent)}",
+                "",
+                f"count_copied = {style(fg=over(green), bg=green)}",
+                f"count_cut = {style(fg=over(red), bg=red)}",
+                f"count_selected = {style(fg=colors['accentText'], bg=colors['accent'])}",
+                "",
+                'border_symbol = "│"',
+                f"border_style = {style(fg=line)}",
+                "",
+                "# The cursor, in both panes: the ground lifted, and towards the accent",
+                "# where the cursor actually is.",
+                "[indicator]",
+                f"current = {style(bg=cursor)}",
+                f"parent = {style(bg=row)}",
+                f"preview = {style(underline=True)}",
+                "",
+                "[tabs]",
+                f"active = {style(fg=on_chip('text'), bg=chip, bold=True)}",
+                f"inactive = {style(fg=on_row('textMuted'), bg=row)}",
+                f"sep_inner = {caps}",
+                f"sep_outer = {caps}",
+                "",
+                "[mode]",
+                f"normal_main = {style(fg=on_chip('text'), bg=chip, bold=True)}",
+                f"normal_alt = {style(fg=on_row('textMuted'), bg=row)}",
+                "",
+                f"select_main = {style(fg=colors['accentText'], bg=colors['accent'], bold=True)}",
+                f"select_alt = {style(fg=accent, bg=select_fill)}",
+                "",
+                f"unset_main = {style(fg=over(colors['yellow']), bg=colors['yellow'], bold=True)}",
+                f"unset_alt = {style(fg=yellow, bg=unset_fill)}",
+                "",
+                "[status]",
+                f"overall = {style(fg=text)}",
+                f"sep_left = {caps}",
+                f"sep_right = {caps}",
+                "",
+                f"perm_sep = {style(fg=dim)}",
+                f"perm_type = {style(fg=blue)}",
+                f"perm_read = {style(fg=yellow)}",
+                f"perm_write = {style(fg=red)}",
+                f"perm_exec = {style(fg=green)}",
+                "",
+                f"progress_label = {style(fg=lift(colors['text'], MIN_CONTRAST, select_fill), bold=True)}",
+                f"progress_normal = {style(fg=accent, bg=select_fill)}",
+                f"progress_error = {style(fg=over(red), bg=red)}",
+                "",
+                "[which]",
+                f"border = {style(fg=line)}",
+                "cols = 3",
+                f"mask = {style(bg=row)}",
+                f"cand = {style(fg=accent, bold=True)}",
+                f"rest = {style(fg=muted)}",
+                f"desc = {style(fg=dim, italic=True)}",
+                f"separator_style = {style(fg=line)}",
+                "",
+                "[confirm]",
+                f"border = {style(fg=line)}",
+                f"title = {style(fg=accent, bold=True)}",
+                f"body = {style(fg=text)}",
+                f"list = {style(fg=muted)}",
+                f"btn_yes = {style(fg=colors['accentText'], bg=colors['accent'], bold=True)}",
+                f"btn_no = {style(fg=on_row('textMuted'), bg=row)}",
+                "",
+                "[spot]",
+                f"border = {style(fg=line)}",
+                f"title = {style(fg=accent, bold=True)}",
+                f"tbl_col = {style(fg=muted)}",
+                f"tbl_cell = {style(bg=row)}",
+                "",
+                "[notify]",
+                f"title_info = {style(fg=blue)}",
+                f"title_warn = {style(fg=yellow)}",
+                f"title_error = {style(fg=red)}",
+                "",
+                "[pick]",
+                f"border = {style(fg=line)}",
+                f"active = {style(fg=accent, bold=True)}",
+                f"inactive = {style(fg=muted)}",
+                "",
+                "[input]",
+                f"border = {style(fg=line)}",
+                f"title = {style(fg=accent, bold=True)}",
+                f"value = {style(fg=text)}",
+                f"selected = {style(bg=row)}",
+                "",
+                "[cmp]",
+                f"border = {style(fg=line)}",
+                f"active = {style(fg=on_row('text'), bg=row)}",
+                f"inactive = {style(fg=muted)}",
+                "",
+                "[tasks]",
+                f"border = {style(fg=line)}",
+                f"title = {style(fg=accent, bold=True)}",
+                f"hovered = {style(fg=accent, bold=True)}",
+                "",
+                "[help]",
+                f"border = {style(fg=line)}",
+                f"chord = {style(fg=accent)}",
+                f"action = {style(fg=text)}",
+                f"hovered = {style(bg=row, bold=True)}",
+                "",
+                "# The mime patterns are yazi's own shape — `**/` and a brace list — and",
+                "# not the bare `image/*` an older flavour would use, which matches",
+                "# nothing here and says nothing about it.",
+                "[filetype]",
+                "rules = [",
+                f'  {{ mime = "**/image/*", fg = "{listed("accentHover")}" }},',
+                f'  {{ mime = "**/{{audio,video}}/*", fg = "{listed("yellow")}" }},',
+                f'  {{ mime = "**/application/{{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,'
+                f'compress,archive,cpio,arj,xar,ms-cab*}}", fg = "{listed("red")}" }},',
+                f'  {{ mime = "**/application/{{pdf,doc,rtf}}", fg = "{listed("blue")}" }},',
+                "",
+                f'  {{ mime = "vfs/{{absent,stale}}", fg = "{dim}", crossed = true }},',
+                f'  {{ url = "*", is = "orphan", fg = "{dim}", crossed = true }},',
+                f'  {{ url = "*", is = "dummy", fg = "{dim}", crossed = true }},',
+                f'  {{ url = "*/", is = "dummy", fg = "{dim}", crossed = true }},',
+                f'  {{ url = "*", is = "exec", fg = "{listed("green")}" }},',
+                "",
+                f'  {{ url = "*", fg = "{listed("textMuted")}" }},',
+                f'  {{ url = "*/", fg = "{listed("text")}" }}',
+                "]",
+            ]
+        )
+        + "\n"
+    )
 
 
 def build_yazi_tmtheme(colors):
@@ -1206,8 +1428,10 @@ def build_yazi_tmtheme(colors):
 
     # Comments are dimmed more in a preview than in an editor.
     dim = mix(muted, background, TERMINAL_DIM)
-    scopes = [(name, scope, dim if key == "comment" else on(key), style)
-              for name, scope, key, style in SYNTAX_SCOPES]
+    scopes = [
+        (name, scope, dim if key == "comment" else on(key), style)
+        for name, scope, key, style in SYNTAX_SCOPES
+    ]
 
     def setting(key, value):
         return f"      <key>{key}</key><string>{value}</string>"
@@ -1266,8 +1490,9 @@ def build_gtk4_css(colors):
     """
     accent = colors.get("accent", "#0a84ff")
     ground = gtk_ground(colors.get("background", "#1e1e1e"), accent)
-    raised = gtk_ground(colors.get("surface", colors.get("background", "#1e1e1e")),
-                        accent)
+    raised = gtk_ground(
+        colors.get("surface", colors.get("background", "#1e1e1e")), accent
+    )
     text = colors.get("text", "#ffffff")
     muted = colors.get("textMuted", text)
     on_accent = colors.get("accentText", "#ffffff")
@@ -1279,42 +1504,59 @@ def build_gtk4_css(colors):
     accent_text = lift(accent, GTK_MIN_CONTRAST, ground)
 
     pairs = [
-        ("window_bg_color", ground), ("window_fg_color", text),
-        ("view_bg_color", ground), ("view_fg_color", text),
-        ("headerbar_bg_color", raised), ("headerbar_fg_color", text),
+        ("window_bg_color", ground),
+        ("window_fg_color", text),
+        ("view_bg_color", ground),
+        ("view_fg_color", text),
+        ("headerbar_bg_color", raised),
+        ("headerbar_fg_color", text),
         ("headerbar_border_color", border),
         ("headerbar_backdrop_color", ground),
         ("headerbar_shade_color", border),
-        ("popover_bg_color", raised), ("popover_fg_color", text),
-        ("card_bg_color", raised), ("card_fg_color", text),
-        ("dialog_bg_color", raised), ("dialog_fg_color", text),
-        ("sidebar_bg_color", raised), ("sidebar_fg_color", text),
-        ("sidebar_border_color", border), ("sidebar_backdrop_color", ground),
+        ("popover_bg_color", raised),
+        ("popover_fg_color", text),
+        ("card_bg_color", raised),
+        ("card_fg_color", text),
+        ("dialog_bg_color", raised),
+        ("dialog_fg_color", text),
+        ("sidebar_bg_color", raised),
+        ("sidebar_fg_color", text),
+        ("sidebar_border_color", border),
+        ("sidebar_backdrop_color", ground),
         ("secondary_sidebar_bg_color", raised),
         ("secondary_sidebar_fg_color", text),
-        ("accent_color", accent_text), ("accent_bg_color", accent),
+        ("accent_color", accent_text),
+        ("accent_bg_color", accent),
         ("accent_fg_color", on_accent),
-        ("destructive_color", lift(colors.get("red", "#ff453a"),
-                                   GTK_MIN_CONTRAST, ground)),
+        (
+            "destructive_color",
+            lift(colors.get("red", "#ff453a"), GTK_MIN_CONTRAST, ground),
+        ),
         ("destructive_bg_color", colors.get("red", "#ff453a")),
         ("destructive_fg_color", on_accent),
-        ("success_color", lift(colors.get("green", "#32d74b"),
-                               GTK_MIN_CONTRAST, ground)),
+        (
+            "success_color",
+            lift(colors.get("green", "#32d74b"), GTK_MIN_CONTRAST, ground),
+        ),
         ("success_bg_color", colors.get("green", "#32d74b")),
         ("success_fg_color", on_accent),
-        ("warning_color", lift(colors.get("yellow", "#ffd60a"),
-                               GTK_MIN_CONTRAST, ground)),
+        (
+            "warning_color",
+            lift(colors.get("yellow", "#ffd60a"), GTK_MIN_CONTRAST, ground),
+        ),
         ("warning_bg_color", colors.get("yellow", "#ffd60a")),
         ("warning_fg_color", on_accent),
-        ("error_color", lift(colors.get("red", "#ff453a"),
-                             GTK_MIN_CONTRAST, ground)),
+        ("error_color", lift(colors.get("red", "#ff453a"), GTK_MIN_CONTRAST, ground)),
         ("error_bg_color", colors.get("red", "#ff453a")),
         ("error_fg_color", on_accent),
         ("borders", border),
     ]
 
-    lines = ["/* Written by theme_manager.py on every palette push. */",
-             "/* Anything put here by hand is lost on the next one. */", ""]
+    lines = [
+        "/* Written by theme_manager.py on every palette push. */",
+        "/* Anything put here by hand is lost on the next one. */",
+        "",
+    ]
     lines += [f"@define-color {name} {value};" for name, value in pairs]
     lines.append("")
     # A muted foreground, which libadwaita derives rather than names.
@@ -1335,10 +1577,12 @@ def build_gtk3_css(colors):
     """
     accent = colors.get("accent", "#0a84ff")
     ground = gtk_ground(colors.get("background", "#1e1e1e"), accent)
-    raised = gtk_ground(colors.get("surface", colors.get("background", "#1e1e1e")),
-                        accent)
-    hover = gtk_ground(colors.get("surfaceHover", colors.get("surface", "#1e1e1e")),
-                       accent)
+    raised = gtk_ground(
+        colors.get("surface", colors.get("background", "#1e1e1e")), accent
+    )
+    hover = gtk_ground(
+        colors.get("surfaceHover", colors.get("surface", "#1e1e1e")), accent
+    )
     border = gtk_ground(colors.get("border", raised), accent)
     text = colors.get("text", "#ffffff")
     muted = colors.get("textMuted", text)
@@ -1348,11 +1592,14 @@ def build_gtk3_css(colors):
     accent_text = lift(accent, GTK_MIN_CONTRAST, ground)
 
     pairs = [
-        ("theme_bg_color", ground), ("theme_fg_color", text),
-        ("theme_base_color", ground), ("theme_text_color", text),
+        ("theme_bg_color", ground),
+        ("theme_fg_color", text),
+        ("theme_base_color", ground),
+        ("theme_text_color", text),
         ("theme_selected_bg_color", accent),
         ("theme_selected_fg_color", on_accent),
-        ("insensitive_bg_color", ground), ("insensitive_fg_color", muted),
+        ("insensitive_bg_color", ground),
+        ("insensitive_fg_color", muted),
         ("insensitive_base_color", ground),
         ("theme_unfocused_bg_color", ground),
         ("theme_unfocused_fg_color", muted),
@@ -1362,16 +1609,22 @@ def build_gtk3_css(colors):
         ("theme_unfocused_selected_fg_color", on_accent),
         ("borders", border),
         ("unfocused_borders", border),
-        ("warning_color", lift(colors.get("yellow", "#ffd60a"),
-                               GTK_MIN_CONTRAST, ground)),
-        ("error_color", lift(colors.get("red", "#ff453a"),
-                             GTK_MIN_CONTRAST, ground)),
-        ("success_color", lift(colors.get("green", "#32d74b"),
-                               GTK_MIN_CONTRAST, ground)),
+        (
+            "warning_color",
+            lift(colors.get("yellow", "#ffd60a"), GTK_MIN_CONTRAST, ground),
+        ),
+        ("error_color", lift(colors.get("red", "#ff453a"), GTK_MIN_CONTRAST, ground)),
+        (
+            "success_color",
+            lift(colors.get("green", "#32d74b"), GTK_MIN_CONTRAST, ground),
+        ),
     ]
 
-    lines = ["/* Written by theme_manager.py on every palette push. */",
-             "/* Anything put here by hand is lost on the next one. */", ""]
+    lines = [
+        "/* Written by theme_manager.py on every palette push. */",
+        "/* Anything put here by hand is lost on the next one. */",
+        "",
+    ]
     lines += [f"@define-color {name} {value};" for name, value in pairs]
     lines.append("")
     lines.append(f"""
@@ -1509,12 +1762,16 @@ def write_gtk_theme(colors):
     still applies. GTK reads gtk.css once, so only newly started applications
     pick it up.
     """
-    for root, path, build in ((GTK4_DIR, GTK4_CSS_FILE, build_gtk4_css),
-                              (GTK3_DIR, GTK3_CSS_FILE, build_gtk3_css)):
+    for root, path, build in (
+        (GTK4_DIR, GTK4_CSS_FILE, build_gtk4_css),
+        (GTK3_DIR, GTK3_CSS_FILE, build_gtk3_css),
+    ):
         if os.path.islink(root):
-            sys.stderr.write(f"{root} is a symlink, so GTK's colours are "
-                             f"not written: run `./setup sync`, which "
-                             f"makes it a real directory\n")
+            sys.stderr.write(
+                f"{root} is a symlink, so GTK's colours are "
+                f"not written: run `./setup sync`, which "
+                f"makes it a real directory\n"
+            )
             continue
         try:
             os.makedirs(root, exist_ok=True)
@@ -1553,8 +1810,10 @@ def folder_swatches(root):
         if not found:
             continue
         colour = found.group(1)
-        if not all(os.path.exists(os.path.join(places, f"folder-{colour}-{proof}.svg"))
-                   for proof in ICON_COLOUR_PROOF):
+        if not all(
+            os.path.exists(os.path.join(places, f"folder-{colour}-{proof}.svg"))
+            for proof in ICON_COLOUR_PROOF
+        ):
             continue
         try:
             with open(os.path.join(places, name), encoding="utf-8") as handle:
@@ -1581,7 +1840,8 @@ def nearest_swatch(accent, swatches):
 
     def distance(value):
         other_hue, other_sat, other_val = colorsys.rgb_to_hsv(
-            *(c / 255 for c in hex_to_rgb(value)))
+            *(c / 255 for c in hex_to_rgb(value))
+        )
         other_grey = other_sat < ICON_GREY_BELOW
         if grey != other_grey:
             away = ICON_HUE_WEIGHT
@@ -1617,16 +1877,18 @@ def build_icon_index(plain, scaled):
 
     Declares only the directories written into; everything else is inherited.
     """
-    lines = ["# Written by theme_manager.py on every palette push.",
-             "# Anything put here by hand is lost on the next one.",
-             "",
-             "[Icon Theme]",
-             f"Name={ICON_THEME_NAME}",
-             "Comment=Papirus, with the folders in the wallpaper's colour",
-             f"Inherits={','.join(ICON_INHERITS)}",
-             "Example=folder",
-             "",
-             "Directories=" + ",".join(name for name, _, _ in plain)]
+    lines = [
+        "# Written by theme_manager.py on every palette push.",
+        "# Anything put here by hand is lost on the next one.",
+        "",
+        "[Icon Theme]",
+        f"Name={ICON_THEME_NAME}",
+        "Comment=Papirus, with the folders in the wallpaper's colour",
+        f"Inherits={','.join(ICON_INHERITS)}",
+        "Example=folder",
+        "",
+        "Directories=" + ",".join(name for name, _, _ in plain),
+    ]
     if scaled:
         lines.append("ScaledDirectories=" + ",".join(name for name, _, _ in scaled))
     lines.append("")
@@ -1659,8 +1921,9 @@ def write_icon_theme(colors):
         return False
 
     if os.path.islink(ICON_THEME_DIR):
-        sys.stderr.write(f"{ICON_THEME_DIR} is a symlink, so the folder "
-                         f"colour is not written\n")
+        sys.stderr.write(
+            f"{ICON_THEME_DIR} is a symlink, so the folder colour is not written\n"
+        )
         return False
 
     stamp = f"{colour} {swatches[colour]} {root}\n"
@@ -1725,11 +1988,17 @@ def write_icon_theme(colors):
             path = os.path.join(building, target)
             os.makedirs(os.path.dirname(path), exist_ok=True)
             os.symlink(source, path)
-        with open(os.path.join(building, os.path.basename(ICON_INDEX_FILE)),
-                  "w", encoding="utf-8") as handle:
+        with open(
+            os.path.join(building, os.path.basename(ICON_INDEX_FILE)),
+            "w",
+            encoding="utf-8",
+        ) as handle:
             handle.write(build_icon_index(plain, scaled))
-        with open(os.path.join(building, os.path.basename(ICON_STAMP_FILE)),
-                  "w", encoding="utf-8") as handle:
+        with open(
+            os.path.join(building, os.path.basename(ICON_STAMP_FILE)),
+            "w",
+            encoding="utf-8",
+        ) as handle:
             handle.write(stamp)
 
         # Only replace a directory carrying our stamp; anything else is
@@ -1737,9 +2006,11 @@ def write_icon_theme(colors):
         if os.path.isdir(ICON_THEME_DIR):
             if not os.path.exists(ICON_STAMP_FILE):
                 shutil.rmtree(building)
-                sys.stderr.write(f"{ICON_THEME_DIR} was not written by this "
-                                 f"script, so the folder colour is not "
-                                 f"changed\n")
+                sys.stderr.write(
+                    f"{ICON_THEME_DIR} was not written by this "
+                    f"script, so the folder colour is not "
+                    f"changed\n"
+                )
                 return False
             shutil.rmtree(ICON_THEME_DIR)
         os.replace(building, ICON_THEME_DIR)
@@ -1757,38 +2028,43 @@ def build_qt_colors(colors):
     """
     accent = colors.get("accent", "#0a84ff")
     ground = gtk_ground(colors.get("background", "#1e1e1e"), accent)
-    raised = gtk_ground(colors.get("surface", colors.get("background", "#1e1e1e")),
-                        accent)
+    raised = gtk_ground(
+        colors.get("surface", colors.get("background", "#1e1e1e")), accent
+    )
     text = colors.get("text", "#ffffff")
     muted = colors.get("textMuted", text)
     on_accent = colors.get("accentText", "#ffffff")
 
     active = {
         # · ground and raised surfaces
-        "Window": ground, "WindowText": text,
-        "Base": ground, "Text": text,
+        "Window": ground,
+        "WindowText": text,
+        "Base": ground,
+        "Text": text,
         "AlternateBase": raised,
-        "Button": raised, "ButtonText": text,
-        "ToolTipBase": raised, "ToolTipText": text,
+        "Button": raised,
+        "ButtonText": text,
+        "ToolTipBase": raised,
+        "ToolTipText": text,
         "PlaceholderText": muted,
         # BrightText is text on filled controls: the palette's accentText.
         "BrightText": on_accent,
-
         # · bevel
         "Light": mix(raised, "#ffffff", QT_BEVEL_LIGHT),
         "Midlight": mix(raised, "#ffffff", QT_BEVEL_MIDLIGHT),
         "Mid": mix(raised, "#000000", QT_BEVEL_MID),
         "Dark": mix(raised, "#000000", QT_BEVEL_DARK),
         "Shadow": mix(raised, "#000000", QT_BEVEL_SHADOW),
-
         # The accent as a fill, paired with accentText.
-        "Highlight": accent, "HighlightedText": on_accent, "Accent": accent,
+        "Highlight": accent,
+        "HighlightedText": on_accent,
+        "Accent": accent,
         # The accent as text, lifted to the contrast floor. Visited links use
         # accentHover rather than a purple the palette does not have.
         "Link": lift(accent, GTK_MIN_CONTRAST, ground),
-        "LinkVisited": lift(colors.get("accentHover", accent),
-                            GTK_MIN_CONTRAST, ground),
-
+        "LinkVisited": lift(
+            colors.get("accentHover", accent), GTK_MIN_CONTRAST, ground
+        ),
         # Unused by styles; present because the list is positional.
         "NoRole": ground,
     }
@@ -1799,26 +2075,36 @@ def build_qt_colors(colors):
 
     faded = mix(text, ground, QT_DISABLED)
     disabled = dict(active)
-    disabled.update({
-        "WindowText": faded, "Text": faded, "ButtonText": faded,
-        "BrightText": faded, "HighlightedText": faded,
-        "PlaceholderText": mix(muted, ground, QT_DISABLED),
-        "Highlight": mix(accent, ground, QT_DISABLED),
-    })
+    disabled.update(
+        {
+            "WindowText": faded,
+            "Text": faded,
+            "ButtonText": faded,
+            "BrightText": faded,
+            "HighlightedText": faded,
+            "PlaceholderText": mix(muted, ground, QT_DISABLED),
+            "Highlight": mix(accent, ground, QT_DISABLED),
+        }
+    )
 
     def group(mapping):
         # #AARRGGBB, the form qt6ct's own schemes use.
         return ", ".join("#ff" + mapping[role].lstrip("#") for role in QT_ROLES)
 
-    return "\n".join([
-        "# GENERATED by scripts/theme_manager.py on every palette change.",
-        "# Edits here are lost at the next switch.",
-        "",
-        "[ColorScheme]",
-        f"active_colors={group(active)}",
-        f"disabled_colors={group(disabled)}",
-        f"inactive_colors={group(inactive)}",
-    ]) + "\n"
+    return (
+        "\n".join(
+            [
+                "# GENERATED by scripts/theme_manager.py on every palette change.",
+                "# Edits here are lost at the next switch.",
+                "",
+                "[ColorScheme]",
+                f"active_colors={group(active)}",
+                f"disabled_colors={group(disabled)}",
+                f"inactive_colors={group(inactive)}",
+            ]
+        )
+        + "\n"
+    )
 
 
 def build_qt6ct_config():
@@ -1827,20 +2113,25 @@ def build_qt6ct_config():
     No [Fonts] section: qt6ct stores fonts as serialized QVariants, and a font
     set here would apply to Quickshell as well.
     """
-    return "\n".join([
-        "# GENERATED by scripts/theme_manager.py on every palette change.",
-        "# qt6ct's own window writes this file as well; what it saves there is",
-        "# lost at the next switch.",
-        "",
-        "[Appearance]",
-        f"style={QT6CT_STYLE}",
-        f"icon_theme={QT6CT_ICONS}",
-        "custom_palette=true",
-        f"color_scheme_path={QT6CT_COLORS_FILE}",
-        "# Qt's own file dialog rather than the GTK one: a themed dialog on a",
-        "# themed window, instead of the one window in the room that is not.",
-        "standard_dialogs=default",
-    ]) + "\n"
+    return (
+        "\n".join(
+            [
+                "# GENERATED by scripts/theme_manager.py on every palette change.",
+                "# qt6ct's own window writes this file as well; what it saves there is",
+                "# lost at the next switch.",
+                "",
+                "[Appearance]",
+                f"style={QT6CT_STYLE}",
+                f"icon_theme={QT6CT_ICONS}",
+                "custom_palette=true",
+                f"color_scheme_path={QT6CT_COLORS_FILE}",
+                "# Qt's own file dialog rather than the GTK one: a themed dialog on a",
+                "# themed window, instead of the one window in the room that is not.",
+                "standard_dialogs=default",
+            ]
+        )
+        + "\n"
+    )
 
 
 def build_kde_colors(colors):
@@ -1852,8 +2143,9 @@ def build_kde_colors(colors):
     """
     accent = colors.get("accent", "#0a84ff")
     ground = gtk_ground(colors.get("background", "#1e1e1e"), accent)
-    raised = gtk_ground(colors.get("surface", colors.get("background", "#1e1e1e")),
-                        accent)
+    raised = gtk_ground(
+        colors.get("surface", colors.get("background", "#1e1e1e")), accent
+    )
     text = colors.get("text", "#ffffff")
     muted = colors.get("textMuted", text)
     on_accent = colors.get("accentText", "#ffffff")
@@ -1868,6 +2160,7 @@ def build_kde_colors(colors):
 
     def surface(background):
         """One colour set, with text lifted against `background`."""
+
         def on(value):
             return rgb(lift(value, GTK_MIN_CONTRAST, background))
 
@@ -1878,36 +2171,47 @@ def build_kde_colors(colors):
             ("BackgroundAlternate", rgb(raised if background == ground else ground)),
             ("ForegroundNormal", rgb(text)),
             ("ForegroundInactive", rgb(muted)),
-            ("ForegroundActive", link), ("ForegroundLink", link),
+            ("ForegroundActive", link),
+            ("ForegroundLink", link),
             ("ForegroundVisited", on(hover)),
-            ("ForegroundNegative", on(red)), ("ForegroundNeutral", on(yellow)),
+            ("ForegroundNegative", on(red)),
+            ("ForegroundNeutral", on(yellow)),
             ("ForegroundPositive", on(green)),
             # Focus and hover are decoration, not text: the unlifted accent.
             ("DecorationFocus", rgb(accent)),
             ("DecorationHover", rgb(hover)),
         ]
 
-    sections = [("General", [("ColorScheme", KDE_SCHEME_NAME),
-                             ("AccentColor", rgb(accent))])]
+    sections = [
+        ("General", [("ColorScheme", KDE_SCHEME_NAME), ("AccentColor", rgb(accent))])
+    ]
     sections += [("Colors:" + name, surface(ground)) for name in KDE_GROUND_SETS]
     sections += [("Colors:" + name, surface(raised)) for name in KDE_RAISED_SETS]
 
     # The selection's background is the accent: text uses accentText, and the
     # status colours are lifted against the accent.
-    sections.append(("Colors:Selection", [
-        ("BackgroundNormal", rgb(accent)),
-        ("BackgroundAlternate", rgb(hover)),
-        ("ForegroundNormal", rgb(on_accent)),
-        ("ForegroundInactive", rgb(mix(on_accent, accent, KDE_SELECTION_QUIET))),
-        ("ForegroundActive", rgb(on_accent)),
-        ("ForegroundLink", rgb(on_accent)),
-        ("ForegroundVisited", rgb(on_accent)),
-        ("ForegroundNegative", rgb(lift(red, GTK_MIN_CONTRAST, accent))),
-        ("ForegroundNeutral", rgb(lift(yellow, GTK_MIN_CONTRAST, accent))),
-        ("ForegroundPositive", rgb(lift(green, GTK_MIN_CONTRAST, accent))),
-        ("DecorationFocus", rgb(on_accent)),
-        ("DecorationHover", rgb(on_accent)),
-    ]))
+    sections.append(
+        (
+            "Colors:Selection",
+            [
+                ("BackgroundNormal", rgb(accent)),
+                ("BackgroundAlternate", rgb(hover)),
+                ("ForegroundNormal", rgb(on_accent)),
+                (
+                    "ForegroundInactive",
+                    rgb(mix(on_accent, accent, KDE_SELECTION_QUIET)),
+                ),
+                ("ForegroundActive", rgb(on_accent)),
+                ("ForegroundLink", rgb(on_accent)),
+                ("ForegroundVisited", rgb(on_accent)),
+                ("ForegroundNegative", rgb(lift(red, GTK_MIN_CONTRAST, accent))),
+                ("ForegroundNeutral", rgb(lift(yellow, GTK_MIN_CONTRAST, accent))),
+                ("ForegroundPositive", rgb(lift(green, GTK_MIN_CONTRAST, accent))),
+                ("DecorationFocus", rgb(on_accent)),
+                ("DecorationHover", rgb(on_accent)),
+            ],
+        )
+    )
     return sections
 
 
@@ -1928,8 +2232,7 @@ def write_kde_colors(colors):
         try:
             parser.read(KDEGLOBALS_FILE, encoding="utf-8")
         except (OSError, UnicodeDecodeError, configparser.Error) as error:
-            sys.stderr.write(f"Cannot read kdeglobals, so it is left alone: "
-                             f"{error}\n")
+            sys.stderr.write(f"Cannot read kdeglobals, so it is left alone: {error}\n")
             return
 
     for section, entries in build_kde_colors(colors):
@@ -1957,8 +2260,10 @@ def write_qt6ct_theme(colors):
     """
     if not shutil.which("qt6ct"):
         return
-    for path, contents in ((QT6CT_COLORS_FILE, build_qt_colors(colors)),
-                           (QT6CT_CONFIG_FILE, build_qt6ct_config())):
+    for path, contents in (
+        (QT6CT_COLORS_FILE, build_qt_colors(colors)),
+        (QT6CT_CONFIG_FILE, build_qt6ct_config()),
+    ):
         try:
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w", encoding="utf-8") as handle:
@@ -2066,17 +2371,19 @@ def build_vesktop_css(colors):
         ("channel-icon", muted),
     ]
 
-    brand = [("brand-experiment", accent),
-             ("brand-new", accent),
-             ("button-outline-brand-text", typed(accent)),
-             ("button-outline-brand-border", accent),
-             ("button-filled-brand-background", accent),
-             ("button-filled-brand-background-hover", hovered),
-             ("button-filled-brand-text", on_accent),
-             ("control-brand-foreground", accent),
-             ("control-brand-foreground-new", accent),
-             ("mention-foreground", on_accent),
-             ("mention-background", accent)]
+    brand = [
+        ("brand-experiment", accent),
+        ("brand-new", accent),
+        ("button-outline-brand-text", typed(accent)),
+        ("button-outline-brand-border", accent),
+        ("button-filled-brand-background", accent),
+        ("button-filled-brand-background-hover", hovered),
+        ("button-filled-brand-text", on_accent),
+        ("control-brand-foreground", accent),
+        ("control-brand-foreground-new", accent),
+        ("mention-foreground", on_accent),
+        ("mention-background", accent),
+    ]
     for value in VESKTOP_STEPS:
         brand.append((f"brand-{value}", rung(value)))
         brand.append((f"brand-experiment-{value}", rung(value)))
@@ -2088,8 +2395,9 @@ def build_vesktop_css(colors):
     # --opacity-blurple-N is separate from the ramp: each carries its own
     # triplet. N is 1, then every 4 up to 96.
     for value in (1,) + tuple(range(4, 100, 4)):
-        brand.append((f"opacity-blurple-{value}",
-                      f"hsl({parts(accent)} / {value / 100:.2f})"))
+        brand.append(
+            (f"opacity-blurple-{value}", f"hsl({parts(accent)} / {value / 100:.2f})")
+        )
         brand.append((f"opacity-blurple-{value}-hsl", parts(accent)))
 
     # The remaining named purples. --premium-tier-* (Nitro branding) is left
@@ -2152,7 +2460,6 @@ def build_vesktop_css(colors):
         ("background-surface-high", raised),
         ("background-surface-higher", raised),
         ("background-surface-highest", hover),
-
         # The accent where the refresh names it rather than the ramp.
         ("background-brand", accent),
         ("badge-background-brand", accent),
@@ -2163,7 +2470,6 @@ def build_vesktop_css(colors):
         ("interactive-accent-background-active", hovered),
         ("border-focus", accent),
         ("input-border-active", accent),
-
         # Channel names and icons in the refresh.
         ("interactive-text-default", muted),
         ("interactive-text-hover", text),
@@ -2171,7 +2477,6 @@ def build_vesktop_css(colors):
         ("interactive-icon-default", muted),
         ("interactive-icon-hover", text),
         ("interactive-icon-active", text),
-
         ("text-default", text),
         ("text-secondary", muted),
         ("text-tertiary", muted),
@@ -2180,7 +2485,6 @@ def build_vesktop_css(colors):
         ("text-feedback-positive", typed(green)),
         ("text-feedback-warning", typed(yellow)),
         ("text-feedback-info", typed(blue)),
-
         ("border-subtle", border),
         ("border-faint", mix(ground, border, 0.5)),
         ("border-strong", border),
@@ -2231,12 +2535,14 @@ def tick_vesktop_theme():
                 raw = handle.read()
             settings = json.loads(raw) if raw.strip() else {}
         except (OSError, ValueError) as error:
-            sys.stderr.write(f"Cannot read Vencord's settings, so they are "
-                             f"left alone: {error}\n")
+            sys.stderr.write(
+                f"Cannot read Vencord's settings, so they are left alone: {error}\n"
+            )
             return False
         if not isinstance(settings, dict):
-            sys.stderr.write("Vencord's settings are not an object, so they "
-                             "are left alone\n")
+            sys.stderr.write(
+                "Vencord's settings are not an object, so they are left alone\n"
+            )
             return False
 
     themes = settings.get("enabledThemes")
@@ -2321,11 +2627,13 @@ def build_spicetify_colors(colors):
         ("misc", border),
     ]
 
-    lines = ["; GENERATED by scripts/theme_manager.py on every palette change.",
-             "; Edits here are lost at the next switch. Spotify wears it from",
-             "; its next start, once `./setup spotify` has patched it.",
-             "",
-             "[base]"]
+    lines = [
+        "; GENERATED by scripts/theme_manager.py on every palette change.",
+        "; Edits here are lost at the next switch. Spotify wears it from",
+        "; its next start, once `./setup spotify` has patched it.",
+        "",
+        "[base]",
+    ]
     lines += [f"{name:<19}= {bare(value)}" for name, value in slots]
     return "\n".join(lines) + "\n"
 
@@ -2373,14 +2681,17 @@ def refresh_spotify():
     if not spotify or not os.path.isdir(xpui) or not os.access(xpui, os.W_OK):
         return
     try:
-        result = subprocess.run(["spicetify", "-n", "refresh"],
-                                capture_output=True, text=True, timeout=30)
+        result = subprocess.run(
+            ["spicetify", "-n", "refresh"], capture_output=True, text=True, timeout=30
+        )
     except (OSError, subprocess.SubprocessError) as error:
         sys.stderr.write(f"spicetify refresh failed: {error}\n")
         return
     if result.returncode != 0:
-        sys.stderr.write("spicetify refresh failed: "
-                         f"{(result.stdout + result.stderr).strip()[-300:]}\n")
+        sys.stderr.write(
+            "spicetify refresh failed: "
+            f"{(result.stdout + result.stderr).strip()[-300:]}\n"
+        )
 
 
 def build_imv_config(colors):
@@ -2396,19 +2707,24 @@ def build_imv_config(colors):
     def bare(value):
         return value.lstrip("#")
 
-    return "\n".join([
-        "# GENERATED by scripts/theme_manager.py on every palette change.",
-        "# imv reads only this file; edits here are lost at the next switch.",
-        "",
-        "[options]",
-        f"background = {bare(ground)}",
-        f"overlay_text_color = {bare(text)}",
-        f"overlay_background_color = {bare(ground)}",
-        f"overlay_background_alpha = {IMV_OVERLAY_ALPHA}",
-        # imv's default overlay font is too large for the window. The family
-        # stays generic; the mono font is a separate setting.
-        f"overlay_font = {IMV_OVERLAY_FONT}",
-    ]) + "\n"
+    return (
+        "\n".join(
+            [
+                "# GENERATED by scripts/theme_manager.py on every palette change.",
+                "# imv reads only this file; edits here are lost at the next switch.",
+                "",
+                "[options]",
+                f"background = {bare(ground)}",
+                f"overlay_text_color = {bare(text)}",
+                f"overlay_background_color = {bare(ground)}",
+                f"overlay_background_alpha = {IMV_OVERLAY_ALPHA}",
+                # imv's default overlay font is too large for the window. The family
+                # stays generic; the mono font is a separate setting.
+                f"overlay_font = {IMV_OVERLAY_FONT}",
+            ]
+        )
+        + "\n"
+    )
 
 
 def write_imv_config(colors):
@@ -2472,7 +2788,6 @@ def build_nvim_colorscheme(colors):
         ("Conceal", {"fg": comment}),
         ("Directory", {"fg": accent}),
         ("Title", {"fg": accent, "bold": True}),
-
         # ── where you are ──
         ("Cursor", {"fg": ground, "bg": accent}),
         ("lCursor", {"fg": ground, "bg": accent}),
@@ -2482,7 +2797,6 @@ def build_nvim_colorscheme(colors):
         ("LineNr", {"fg": gutter}),
         ("SignColumn", {"bg": "NONE"}),
         ("MatchParen", {"fg": accent, "bold": True, "underline": True}),
-
         # ── selection and search ──
         # text on the fill is lifted against the fill
         ("Visual", {"bg": filled}),
@@ -2491,7 +2805,6 @@ def build_nvim_colorscheme(colors):
         ("IncSearch", {"fg": ground, "bg": yellow}),
         ("CurSearch", {"fg": ground, "bg": accent}),
         ("Substitute", {"fg": ground, "bg": red}),
-
         # ── the menus ──
         ("Pmenu", {"fg": text, "bg": raised}),
         ("PmenuSel", {"fg": over(filled, "text"), "bg": filled, "bold": True}),
@@ -2501,7 +2814,6 @@ def build_nvim_colorscheme(colors):
         ("PmenuExtra", {"fg": comment, "bg": raised}),
         ("WildMenu", {"fg": over(filled, "text"), "bg": filled}),
         ("QuickFixLine", {"bg": raised}),
-
         # ── statusline and tabline ──
         # lualine's `theme = "auto"` builds from these.
         ("StatusLine", {"fg": text, "bg": "NONE"}),
@@ -2511,7 +2823,6 @@ def build_nvim_colorscheme(colors):
         ("TabLineFill", {"bg": "NONE"}),
         ("WinBar", {"fg": muted, "bold": True}),
         ("WinBarNC", {"fg": comment}),
-
         # ── messages ──
         ("ModeMsg", {"fg": accent, "bold": True}),
         ("MoreMsg", {"fg": green}),
@@ -2521,7 +2832,6 @@ def build_nvim_colorscheme(colors):
         ("NonText", {"fg": comment}),
         ("Whitespace", {"fg": mix(comment, ground, TERMINAL_DIM)}),
         ("SpecialKey", {"fg": comment}),
-
         # ── syntax scopes ──
         ("Comment", {"fg": comment, "italic": True}),
         ("String", {"fg": green}),
@@ -2556,7 +2866,6 @@ def build_nvim_colorscheme(colors):
         ("Underlined", {"fg": accent, "underline": True}),
         ("Error", {"fg": red, "bold": True}),
         ("Todo", {"fg": ground, "bg": yellow, "bold": True}),
-
         # ── the diagnostics ──
         # The palette's own status colours, not the bar's fixed indicator hues.
         ("DiagnosticError", {"fg": red}),
@@ -2568,21 +2877,21 @@ def build_nvim_colorscheme(colors):
         ("DiagnosticUnderlineWarn", {"sp": yellow, "undercurl": True}),
         ("DiagnosticUnderlineInfo", {"sp": blue, "undercurl": True}),
         ("DiagnosticUnderlineHint", {"sp": accent, "undercurl": True}),
-
         # ── diff ──
         ("DiffAdd", {"bg": mix(ground, colors["green"], TERMINAL_STATE_FILL)}),
         ("DiffChange", {"bg": mix(ground, colors["blue"], TERMINAL_STATE_FILL)}),
-        ("DiffDelete", {"fg": red, "bg": mix(ground, colors["red"], TERMINAL_DIM * 0.5)}),
+        (
+            "DiffDelete",
+            {"fg": red, "bg": mix(ground, colors["red"], TERMINAL_DIM * 0.5)},
+        ),
         ("DiffText", {"bg": mix(ground, colors["blue"], TERMINAL_STATE_FILL * 1.6)}),
         ("Added", {"fg": green}),
         ("Changed", {"fg": blue}),
         ("Removed", {"fg": red}),
-
         # ── the gutter ──
         ("GitSignsAdd", {"fg": green}),
         ("GitSignsChange", {"fg": blue}),
         ("GitSignsDelete", {"fg": red}),
-
         # ── lazy.nvim and blink.cmp ──
         ("LazyNormal", {"fg": text, "bg": "NONE"}),
         ("LazyButtonActive", {"fg": ground, "bg": accent}),
@@ -2591,7 +2900,6 @@ def build_nvim_colorscheme(colors):
         ("BlinkCmpLabelMatch", {"fg": accent, "bold": True}),
         ("BlinkCmpDoc", {"fg": text, "bg": raised}),
         ("BlinkCmpDocBorder", {"fg": line}),
-
         # ── the tree ──
         # nvim-tree links almost all of its groups to the ones above
         # (NvimTreeNormal -> Normal), so only these need colours. Six more
@@ -2692,14 +3000,24 @@ def build_nvim_colorscheme(colors):
     }
 
     # :terminal colours, the same slots as the kitty fragment.
-    terminal = [ground, colors["red"], colors["green"], colors["yellow"],
-                colors["blue"], colors["red"], colors["accent"], muted,
-                comment, brighten(colors["red"], ground),
-                brighten(colors["green"], ground),
-                brighten(colors["yellow"], ground),
-                brighten(colors["blue"], ground),
-                brighten(colors["red"], ground),
-                brighten(colors["accent"], ground), text]
+    terminal = [
+        ground,
+        colors["red"],
+        colors["green"],
+        colors["yellow"],
+        colors["blue"],
+        colors["red"],
+        colors["accent"],
+        muted,
+        comment,
+        brighten(colors["red"], ground),
+        brighten(colors["green"], ground),
+        brighten(colors["yellow"], ground),
+        brighten(colors["blue"], ground),
+        brighten(colors["red"], ground),
+        brighten(colors["accent"], ground),
+        text,
+    ]
 
     def spec(attributes):
         parts = []
@@ -2756,13 +3074,22 @@ def push_nvim_colorscheme(colors):
 
     for socket_path in sorted(glob.glob(NVIM_SOCKETS)):
         result = subprocess.run(
-            [nvim, "--server", socket_path, "--remote-expr",
-             'luaeval("tostring(pcall(vim.cmd.colorscheme, \'impasto\'))")'],
-            capture_output=True, text=True, timeout=5)
+            [
+                nvim,
+                "--server",
+                socket_path,
+                "--remote-expr",
+                "luaeval(\"tostring(pcall(vim.cmd.colorscheme, 'impasto'))\")",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
         if result.returncode != 0:
             # A stale socket from a closed neovim; keep going.
-            sys.stderr.write(f"{os.path.basename(socket_path)}: "
-                             f"{result.stderr.strip()}\n")
+            sys.stderr.write(
+                f"{os.path.basename(socket_path)}: {result.stderr.strip()}\n"
+            )
 
 
 def build_vscodium_manifest(colors):
@@ -2772,8 +3099,9 @@ def build_vscodium_manifest(colors):
     unset, so it is recomputed on every push (one palette is light). The theme
     leaves translucent colours (minimap slider, scrims) to those defaults.
     """
-    ground = gtk_ground(colors.get("background", "#1e1e1e"),
-                        colors.get("accent", "#0a84ff"))
+    ground = gtk_ground(
+        colors.get("background", "#1e1e1e"), colors.get("accent", "#0a84ff")
+    )
     lit = luminance(*hex_to_rgb(ground)) > GTK_LIGHT_ABOVE
     manifest = {
         "name": "impasto",
@@ -2784,11 +3112,13 @@ def build_vscodium_manifest(colors):
         "engines": {"vscode": "^1.0.0"},
         "categories": ["Themes"],
         "contributes": {
-            "themes": [{
-                "label": VSCODIUM_LABEL,
-                "uiTheme": "vs" if lit else "vs-dark",
-                "path": "./themes/" + os.path.basename(VSCODIUM_THEME_FILE),
-            }],
+            "themes": [
+                {
+                    "label": VSCODIUM_LABEL,
+                    "uiTheme": "vs" if lit else "vs-dark",
+                    "path": "./themes/" + os.path.basename(VSCODIUM_THEME_FILE),
+                }
+            ],
         },
     }
     # No "generated" comment: VSCodium rejects a package.json with comments.
@@ -2806,8 +3136,9 @@ def build_vscodium_theme(colors):
     """
     accent = colors.get("accent", "#0a84ff")
     ground = gtk_ground(colors.get("background", "#1e1e1e"), accent)
-    panel = gtk_ground(colors.get("surface", colors.get("background", "#1e1e1e")),
-                       accent)
+    panel = gtk_ground(
+        colors.get("surface", colors.get("background", "#1e1e1e")), accent
+    )
     chrome = mix(ground, "#000000", VSCODIUM_CHROME)
     on_accent = colors.get("accentText", "#ffffff")
 
@@ -2848,7 +3179,6 @@ def build_vscodium_theme(colors):
         "textBlockQuote.background": panel,
         "textCodeBlock.background": panel,
         "textPreformat.foreground": types,
-
         # ── window chrome ──
         "titleBar.activeBackground": chrome,
         "titleBar.activeForeground": text,
@@ -2884,7 +3214,6 @@ def build_vscodium_theme(colors):
         "statusBarItem.errorForeground": on_accent,
         "statusBarItem.warningBackground": colors.get("yellow", yellow),
         "statusBarItem.warningForeground": on_accent,
-
         # ── tabs ──
         "editorGroupHeader.tabsBackground": chrome,
         "editorGroupHeader.noTabsBackground": chrome,
@@ -2908,7 +3237,6 @@ def build_vscodium_theme(colors):
         "breadcrumbPicker.background": panel,
         "editorStickyScroll.background": ground,
         "editorStickyScrollHover.background": wash,
-
         # The notification banner (workspace trust, updates); otherwise it
         # stays VS Code's blue.
         "banner.background": panel,
@@ -2924,7 +3252,6 @@ def build_vscodium_theme(colors):
         "commandCenter.inactiveBorder": hairline,
         "debugToolBar.background": panel,
         "debugToolBar.border": hairline,
-
         # ── the editor ──
         "editor.background": ground,
         "editor.foreground": text,
@@ -2971,7 +3298,6 @@ def build_vscodium_theme(colors):
         "editorOverviewRuler.addedForeground": green,
         "editorOverviewRuler.modifiedForeground": blue,
         "editorOverviewRuler.deletedForeground": red,
-
         # Bracket-pair colours: six rungs from five hues, accentHover and muted.
         "editorBracketHighlight.foreground1": accent_text,
         "editorBracketHighlight.foreground2": yellow,
@@ -2980,7 +3306,6 @@ def build_vscodium_theme(colors):
         "editorBracketHighlight.foreground5": types,
         "editorBracketHighlight.foreground6": muted,
         "editorBracketHighlight.unexpectedBracket.foreground": red,
-
         # ── floating widgets ──
         "editorWidget.background": panel,
         "editorWidget.foreground": text,
@@ -3029,7 +3354,6 @@ def build_vscodium_theme(colors):
         "peekViewTitle.background": panel,
         "peekViewTitleLabel.foreground": text,
         "peekViewTitleDescription.foreground": muted,
-
         # ── inputs, buttons ──
         "input.background": panel,
         "input.foreground": text,
@@ -3066,7 +3390,6 @@ def build_vscodium_theme(colors):
         "keybindingLabel.bottomBorder": hairline,
         "settings.headerForeground": text,
         "settings.modifiedItemIndicator": accent,
-
         # ── lists and trees ──
         "list.activeSelectionBackground": fill,
         "list.activeSelectionForeground": on_fill,
@@ -3089,18 +3412,20 @@ def build_vscodium_theme(colors):
         "gitDecoration.stageDeletedResourceForeground": red,
         "gitDecoration.conflictingResourceForeground": yellow,
         "gitDecoration.ignoredResourceForeground": comment,
-
         # ── diff ──
         "diffEditor.border": hairline,
-        "diffEditor.insertedTextBackground": mix(ground, colors.get("green", green),
-                                                 TERMINAL_STATE_FILL * 0.5),
-        "diffEditor.removedTextBackground": mix(ground, colors.get("red", red),
-                                                TERMINAL_STATE_FILL * 0.5),
-        "merge.currentHeaderBackground": mix(ground, colors.get("green", green),
-                                             TERMINAL_STATE_FILL),
-        "merge.incomingHeaderBackground": mix(ground, colors.get("blue", blue),
-                                              TERMINAL_STATE_FILL),
-
+        "diffEditor.insertedTextBackground": mix(
+            ground, colors.get("green", green), TERMINAL_STATE_FILL * 0.5
+        ),
+        "diffEditor.removedTextBackground": mix(
+            ground, colors.get("red", red), TERMINAL_STATE_FILL * 0.5
+        ),
+        "merge.currentHeaderBackground": mix(
+            ground, colors.get("green", green), TERMINAL_STATE_FILL
+        ),
+        "merge.incomingHeaderBackground": mix(
+            ground, colors.get("blue", blue), TERMINAL_STATE_FILL
+        ),
         # ── terminal ──
         # On the chrome: the panel is one of the window's sides.
         "panel.background": chrome,
@@ -3116,14 +3441,17 @@ def build_vscodium_theme(colors):
         "terminal.selectionBackground": mix(chrome, accent, TERMINAL_STATE_FILL),
     }
 
-
     # Error Lens is themed here rather than in settings.json so it follows the
     # palette. The band is a light wash (VSCODIUM_LENS_WASH) because Error Lens
     # draws over the code, and the message is lifted against the band. The
     # *Light variants get the same values, computed against this palette's
     # ground.
-    for state, key in (("error", "red"), ("warning", "yellow"),
-                       ("info", "blue"), ("hint", "accent")):
+    for state, key in (
+        ("error", "red"),
+        ("warning", "yellow"),
+        ("info", "blue"),
+        ("hint", "accent"),
+    ):
         band = mix(ground, colors.get(key, accent), VSCODIUM_LENS_WASH)
         message = lift(colors.get(key, accent), MIN_CONTRAST, band)
         colours[f"errorLens.{state}Background"] = band
@@ -3137,25 +3465,39 @@ def build_vscodium_theme(colors):
         colours[f"errorLens.statusBarIcon{state}Foreground"] = on(key)
 
     for slot, key in TERMINAL_NORMAL:
-        colours[f"terminal.{VSCODIUM_ANSI[slot]}"] = lift(colors[key], MIN_CONTRAST,
-                                                          chrome)
+        colours[f"terminal.{VSCODIUM_ANSI[slot]}"] = lift(
+            colors[key], MIN_CONTRAST, chrome
+        )
     for slot, key in TERMINAL_BRIGHT:
         colours[f"terminal.{VSCODIUM_ANSI[slot]}"] = brighten(colors[key], chrome)
 
     # Base scopes, then finer scopes mapped onto the same colours.
     token_colors = [
-        {"name": name, "scope": scope,
-         "settings": {"foreground": comment if key == "comment" else on(key),
-                      **({"fontStyle": style} if style else {})}}
+        {
+            "name": name,
+            "scope": scope,
+            "settings": {
+                "foreground": comment if key == "comment" else on(key),
+                **({"fontStyle": style} if style else {}),
+            },
+        }
         for name, scope, key, style in SYNTAX_SCOPES
     ]
     extra = [
-        ("Escape and placeholder", "constant.character.escape, "
-                                   "constant.other.placeholder", red, None),
+        (
+            "Escape and placeholder",
+            "constant.character.escape, constant.other.placeholder",
+            red,
+            None,
+        ),
         ("Preprocessor", "meta.preprocessor, keyword.control.directive", red, None),
         ("Other constant", "constant.other, support.constant", yellow, None),
-        ("Namespace", "entity.name.namespace, entity.name.scope-resolution",
-         types, None),
+        (
+            "Namespace",
+            "entity.name.namespace, entity.name.scope-resolution",
+            types,
+            None,
+        ),
         ("Heading", "markup.heading", accent_text, "bold"),
         ("Bold", "markup.bold", text, "bold"),
         ("Italic", "markup.italic", text, "italic"),
@@ -3165,21 +3507,35 @@ def build_vscodium_theme(colors):
         ("Deleted", "markup.deleted", red, None),
     ]
     token_colors += [
-        {"name": name, "scope": scope,
-         "settings": {"foreground": colour,
-                      **({"fontStyle": style} if style else {})}}
+        {
+            "name": name,
+            "scope": scope,
+            "settings": {
+                "foreground": colour,
+                **({"fontStyle": style} if style else {}),
+            },
+        }
         for name, scope, colour, style in extra
     ]
 
     # Semantic tokens from language servers, mapped to the same colours.
     semantic = {
-        "namespace": types, "class": types, "struct": types, "enum": types,
-        "interface": types, "type": types, "typeParameter": types,
+        "namespace": types,
+        "class": types,
+        "struct": types,
+        "enum": types,
+        "interface": types,
+        "type": types,
+        "typeParameter": types,
         "decorator": types,
-        "function": blue, "method": blue,
+        "function": blue,
+        "method": blue,
         "macro": red,
-        "variable": text, "parameter": text, "property": text,
-        "enumMember": yellow, "number": yellow,
+        "variable": text,
+        "parameter": text,
+        "property": text,
+        "enumMember": yellow,
+        "number": yellow,
         "string": green,
         "keyword": accent_text,
         "operator": muted,
@@ -3188,17 +3544,19 @@ def build_vscodium_theme(colors):
 
     theme = {
         "name": VSCODIUM_LABEL,
-        "type": "light" if luminance(*hex_to_rgb(ground)) > GTK_LIGHT_ABOVE
-                else "dark",
+        "type": "light" if luminance(*hex_to_rgb(ground)) > GTK_LIGHT_ABOVE else "dark",
         "semanticHighlighting": True,
         "colors": colours,
         "tokenColors": token_colors,
         "semanticTokenColors": semantic,
     }
     # The theme file is parsed as JSONC, so it can carry the header comment.
-    return ("// GENERATED by scripts/theme_manager.py on every palette change.\n"
-            "// Edits here are lost at the next theme switch.\n"
-            + json.dumps(theme, indent=2) + "\n")
+    return (
+        "// GENERATED by scripts/theme_manager.py on every palette change.\n"
+        "// Edits here are lost at the next theme switch.\n"
+        + json.dumps(theme, indent=2)
+        + "\n"
+    )
 
 
 def write_vscodium_theme(colors):
@@ -3210,8 +3568,10 @@ def write_vscodium_theme(colors):
     """
     if not shutil.which("codium"):
         return
-    for path, build in ((VSCODIUM_MANIFEST_FILE, build_vscodium_manifest),
-                        (VSCODIUM_THEME_FILE, build_vscodium_theme)):
+    for path, build in (
+        (VSCODIUM_MANIFEST_FILE, build_vscodium_manifest),
+        (VSCODIUM_THEME_FILE, build_vscodium_theme),
+    ):
         try:
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w", encoding="utf-8") as handle:
@@ -3240,7 +3600,7 @@ def strip_jsonc(text):
                 if text[close] == '"':
                     break
                 close += 1
-            out.append(text[index:close + 1])
+            out.append(text[index : close + 1])
             index = close + 1
         elif text.startswith("//", index):
             newline = text.find("\n", index)
@@ -3323,8 +3683,11 @@ def jsonc_value_end(text, index):
             index += 1
         return len(text)
     end = index
-    while (end < len(text) and text[end] not in ",}\n"
-           and not text.startswith(("//", "/*"), end)):
+    while (
+        end < len(text)
+        and text[end] not in ",}\n"
+        and not text.startswith(("//", "/*"), end)
+    ):
         end += 1
     while end > index and text[end - 1].isspace():
         end -= 1
@@ -3431,8 +3794,10 @@ def vscodium_palette_settings(colors):
         return lift(colors.get(key, accent), MIN_CONTRAST, ground)
 
     # Indent guides use the bracket-pair colour order, at VSCODIUM_GUIDE alpha.
-    guides = [on(key) + VSCODIUM_GUIDE
-              for key in ("accent", "yellow", "blue", "green", "accentHover")]
+    guides = [
+        on(key) + VSCODIUM_GUIDE
+        for key in ("accent", "yellow", "blue", "green", "accentHover")
+    ]
     return {
         # Folder icons follow the accent.
         "material-icon-theme.folders.color": accent,
@@ -3453,7 +3818,6 @@ def build_vscodium_settings(colors):
         "workbench.colorTheme": VSCODIUM_LABEL,
         "workbench.iconTheme": "material-icon-theme",
         "workbench.productIconTheme": "fluent-icons",
-
         # ── type ──
         **vscodium_font_settings(shell_font()),
         "editor.fontLigatures": True,
@@ -3461,7 +3825,6 @@ def build_vscodium_settings(colors):
         "editor.lineHeight": 1.6,
         "terminal.integrated.fontSize": 13,
         "scm.inputFontFamily": "editor",
-
         # ── window layout ──
         # Activity bar along the top instead of down the left, which frees a
         # 48px column.
@@ -3477,7 +3840,6 @@ def build_vscodium_settings(colors):
         "workbench.tree.indent": 14,
         "editor.padding.top": 16,
         "editor.padding.bottom": 16,
-
         # ── rendering ──
         "editor.cursorBlinking": "smooth",
         "editor.cursorSmoothCaretAnimation": "on",
@@ -3493,7 +3855,6 @@ def build_vscodium_settings(colors):
         "editor.renderLineHighlight": "all",
         "editor.linkedEditing": True,
         "editor.overviewRulerBorder": False,
-
         # ── extensions ──
         # Error Lens: band behind the message only, not the whole line.
         "errorLens.messageBackgroundMode": "message",
@@ -3523,12 +3884,14 @@ def write_vscodium_settings(colors):
                 raw = handle.read()
             settings = json.loads(strip_jsonc(raw)) if raw.strip() else {}
         except (OSError, ValueError) as error:
-            sys.stderr.write(f"Cannot read VSCodium's settings, so they are "
-                             f"left alone: {error}\n")
+            sys.stderr.write(
+                f"Cannot read VSCodium's settings, so they are left alone: {error}\n"
+            )
             return False
         if not isinstance(settings, dict):
-            sys.stderr.write("VSCodium's settings are not an object, so they "
-                             "are left alone\n")
+            sys.stderr.write(
+                "VSCodium's settings are not an object, so they are left alone\n"
+            )
             return False
 
     settings.update(build_vscodium_settings(colors))
@@ -3570,8 +3933,9 @@ NAUTILUS_PLACES = ("DESKTOP", "DOCUMENTS", "PICTURES", "DOWNLOAD")
 def user_dir(name):
     """An XDG user directory, or None when it is unset or is $HOME."""
     try:
-        path = subprocess.run(["xdg-user-dir", name], capture_output=True,
-                              text=True, timeout=10).stdout.strip()
+        path = subprocess.run(
+            ["xdg-user-dir", name], capture_output=True, text=True, timeout=10
+        ).stdout.strip()
     except (OSError, subprocess.SubprocessError):
         return None
     if not path or os.path.realpath(path) == os.path.realpath(os.path.expanduser("~")):
@@ -3626,8 +3990,12 @@ def apply_nautilus():
     refused = 0
     for schema, key, value in NAUTILUS_SETTINGS:
         try:
-            result = subprocess.run(["gsettings", "set", schema, key, value],
-                                    capture_output=True, text=True, timeout=10)
+            result = subprocess.run(
+                ["gsettings", "set", schema, key, value],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
         except (OSError, subprocess.SubprocessError) as error:
             sys.stderr.write(f"{schema} {key}: {error}\n")
             refused += 1
@@ -3637,8 +4005,9 @@ def apply_nautilus():
             refused += 1
 
     if refused:
-        sys.stderr.write(f"{refused} of {len(NAUTILUS_SETTINGS)} settings were "
-                         f"refused\n")
+        sys.stderr.write(
+            f"{refused} of {len(NAUTILUS_SETTINGS)} settings were refused\n"
+        )
     return write_nautilus_bookmarks() and refused == 0
 
 
@@ -3660,20 +4029,26 @@ ZEN_CHROME_FILE = "userChrome.css"
 # user.js, which is read at startup and never rewritten; the browser
 # overwrites prefs.js on exit.
 ZEN_PREFS_FILE = "user.js"
-ZEN_PREFS = (
-    ("toolkit.legacyUserProfileCustomizations.stylesheets", "true"),
-)
+ZEN_PREFS = (("toolkit.legacyUserProfileCustomizations.stylesheets", "true"),)
 
 
 def zen_profile():
-    """The profile directory the browser actually opens.
+    return browser_profile(ZEN_PROFILE_ROOT)
 
-    The install-specific default in installs.ini takes precedence over
-    `Default=1` in profiles.ini, as in Firefox. Zen ships an unused "Default
-    Profile" next to the real "Default (release)" one, so reading
-    profiles.ini alone picks the wrong directory.
+
+def browser_profile(root):
+    """The profile directory a Firefox-based browser actually opens.
+
+    `root` holds its profiles.ini. The install-specific default in
+    installs.ini takes precedence over `Default=1` in profiles.ini, as in
+    Firefox. Zen ships an unused "Default Profile" next to the real "Default
+    (release)" one, and Waterfox keeps a "68-edition" profile marked default
+    beside the one it opens, so reading profiles.ini alone picks the wrong
+    directory.
     """
-    if not os.path.isfile(ZEN_PROFILES_FILE):
+    profiles_file = os.path.join(root, "profiles.ini")
+    installs_file = os.path.join(root, "installs.ini")
+    if not os.path.isfile(profiles_file):
         return None
 
     def read(path):
@@ -3685,15 +4060,15 @@ def zen_profile():
             return None
         return parser
 
-    installs = read(ZEN_INSTALLS_FILE)
+    installs = read(installs_file)
     if installs:
         for section in installs.sections():
             path = installs.get(section, "Default", fallback="")
-            candidate = os.path.join(ZEN_PROFILE_ROOT, path)
+            candidate = os.path.join(root, path)
             if path and os.path.isdir(candidate):
                 return candidate
 
-    profiles = read(ZEN_PROFILES_FILE)
+    profiles = read(profiles_file)
     if not profiles:
         return None
 
@@ -3703,7 +4078,7 @@ def zen_profile():
         if not path:
             continue
         if profiles.get(section, "IsRelative", fallback="1") == "1":
-            path = os.path.join(ZEN_PROFILE_ROOT, path)
+            path = os.path.join(root, path)
         if not os.path.isdir(path):
             continue
         if profiles.get(section, "Default", fallback="0") == "1":
@@ -3729,44 +4104,49 @@ def build_zen_css(colors):
     text = colors.get("text", "#eef2f7")
     border = gtk_ground(colors.get("border", raised), accent)
 
-    return "\n".join([
-        "/* GENERATED by scripts/theme_manager.py on every palette change.",
-        "   Zen reads this file when a window is built; edits here are lost",
-        "   at the next switch. */",
-        "",
-        ":root {",
-        # Force the dark branch of light-dark(); in light mode Zen would mix
-        # this ground into white.
-        "  color-scheme: dark !important;",
-        "",
-        "  /* the two the browser derives the rest from */",
-        f"  --zen-primary-color: {accent} !important;",
-        f"  --zen-branding-dark: {ground} !important;",
-        f"  --zen-branding-paper: {ground} !important;",
-        f"  --zen-branding-bg: {ground} !important;",
-        f"  --zen-branding-bg-reverse: {text} !important;",
-        "",
-        "  /* and the near-blacks it hardcodes past its own formula */",
-        f"  --zen-themed-toolbar-bg-transparent: {raised} !important;",
-        f"  --zen-dialog-background: {raised} !important;",
-        f"  --zen-in-content-dialog-background: {raised} !important;",
-        f"  --zen-urlbar-background: {raised} !important;",
-        f"  --zen-colors-border: {border} !important;",
-        f"  --zen-input-border-color: {border} !important;",
-        "}",
-        "",
-        # The sidebar and toolbar backgrounds are set by
-        # ZenGradientGenerator.mjs as inline styles on these elements, so :root
-        # cannot reach them; an author !important rule on the element wins over
-        # the inline value.
-        "#zen-browser-background {",
-        f"  --zen-main-browser-background: {ground} !important;",
-        "}",
-        "",
-        "#zen-toolbar-background {",
-        f"  --zen-main-browser-background-toolbar: {raised} !important;",
-        "}",
-    ]) + "\n"
+    return (
+        "\n".join(
+            [
+                "/* GENERATED by scripts/theme_manager.py on every palette change.",
+                "   Zen reads this file when a window is built; edits here are lost",
+                "   at the next switch. */",
+                "",
+                ":root {",
+                # Force the dark branch of light-dark(); in light mode Zen would mix
+                # this ground into white.
+                "  color-scheme: dark !important;",
+                "",
+                "  /* the two the browser derives the rest from */",
+                f"  --zen-primary-color: {accent} !important;",
+                f"  --zen-branding-dark: {ground} !important;",
+                f"  --zen-branding-paper: {ground} !important;",
+                f"  --zen-branding-bg: {ground} !important;",
+                f"  --zen-branding-bg-reverse: {text} !important;",
+                "",
+                "  /* and the near-blacks it hardcodes past its own formula */",
+                f"  --zen-themed-toolbar-bg-transparent: {raised} !important;",
+                f"  --zen-dialog-background: {raised} !important;",
+                f"  --zen-in-content-dialog-background: {raised} !important;",
+                f"  --zen-urlbar-background: {raised} !important;",
+                f"  --zen-colors-border: {border} !important;",
+                f"  --zen-input-border-color: {border} !important;",
+                "}",
+                "",
+                # The sidebar and toolbar backgrounds are set by
+                # ZenGradientGenerator.mjs as inline styles on these elements, so :root
+                # cannot reach them; an author !important rule on the element wins over
+                # the inline value.
+                "#zen-browser-background {",
+                f"  --zen-main-browser-background: {ground} !important;",
+                "}",
+                "",
+                "#zen-toolbar-background {",
+                f"  --zen-main-browser-background-toolbar: {raised} !important;",
+                "}",
+            ]
+        )
+        + "\n"
+    )
 
 
 def build_zen_prefs():
@@ -3795,14 +4175,134 @@ def write_zen_css(colors):
     try:
         chrome = os.path.join(profile, ZEN_CHROME_DIR)
         os.makedirs(chrome, exist_ok=True)
-        with open(os.path.join(chrome, ZEN_CHROME_FILE), "w",
-                  encoding="utf-8") as handle:
+        with open(
+            os.path.join(chrome, ZEN_CHROME_FILE), "w", encoding="utf-8"
+        ) as handle:
             handle.write(build_zen_css(colors))
-        with open(os.path.join(profile, ZEN_PREFS_FILE), "w",
-                  encoding="utf-8") as handle:
+        with open(
+            os.path.join(profile, ZEN_PREFS_FILE), "w", encoding="utf-8"
+        ) as handle:
             handle.write(build_zen_prefs())
     except OSError as error:
         sys.stderr.write(f"Cannot write Zen's chrome: {error}\n")
+
+
+# Waterfox is Firefox-based too and reads the same user stylesheet, but it has
+# none of Zen's variables: this sets Firefox's own toolbar, tab, address-bar
+# and menu ones, and a few rules for what the variables do not reach. Only the
+# browser's own chrome changes; pages keep their colours.
+WATERFOX_PROFILE_ROOT = os.path.expanduser("~/.waterfox")
+WATERFOX_PREFS = (
+    ("toolkit.legacyUserProfileCustomizations.stylesheets", "true"),
+    # 0 is the dark toolbar theme.
+    ("browser.theme.toolbar-theme", "0"),
+)
+
+
+def build_waterfox_css(colors):
+    """userChrome.css for Waterfox: the palette over Firefox's chrome."""
+    accent = colors.get("accent", "#0a84ff")
+    ground = gtk_ground(colors.get("background", "#1e1e1e"), accent)
+    surface = colors.get("surface", colors.get("background", "#1e1e1e"))
+    raised = gtk_ground(surface, accent)
+    text = colors.get("text", "#eef2f7")
+    border = gtk_ground(colors.get("border", raised), accent)
+
+    return "\n".join([
+        "/* GENERATED by scripts/theme_manager.py on every palette change.",
+        "   Waterfox reads this file at startup; edits here are lost at the",
+        "   next switch. */",
+        "",
+        ":root {",
+        "  color-scheme: dark !important;",
+        "",
+        "  /* the window, the tab strip and the toolbars */",
+        f"  --lwt-accent-color: {ground} !important;",
+        f"  --lwt-text-color: {text} !important;",
+        f"  --toolbar-bgcolor: {raised} !important;",
+        f"  --toolbar-color: {text} !important;",
+        f"  --toolbarbutton-icon-fill: {text} !important;",
+        f"  --tab-selected-bgcolor: {raised} !important;",
+        f"  --tab-selected-textcolor: {text} !important;",
+        f"  --tab-loading-fill: {accent} !important;",
+        "",
+        "  /* the address bar and its suggestions */",
+        f"  --toolbar-field-background-color: {ground} !important;",
+        f"  --toolbar-field-focus-background-color: {ground} !important;",
+        f"  --toolbar-field-color: {text} !important;",
+        f"  --toolbar-field-focus-color: {text} !important;",
+        f"  --toolbar-field-border-color: {border} !important;",
+        f"  --toolbar-field-focus-border-color: {accent} !important;",
+        f"  --autocomplete-popup-background: {raised} !important;",
+        f"  --autocomplete-popup-color: {text} !important;",
+        f"  --autocomplete-popup-highlight-background: {accent} !important;",
+        f"  --autocomplete-popup-highlight-color: {ground} !important;",
+        "",
+        "  /* menus, panels and the sidebar */",
+        f"  --arrowpanel-background: {raised} !important;",
+        f"  --arrowpanel-color: {text} !important;",
+        f"  --arrowpanel-border-color: {border} !important;",
+        f"  --sidebar-background-color: {ground} !important;",
+        f"  --sidebar-text-color: {text} !important;",
+        f"  --focus-outline-color: {accent} !important;",
+        "}",
+        "",
+        "/* the variables do not reach every surface, so the main ones are set",
+        "   directly as well */",
+        "#navigator-toolbox,",
+        "#TabsToolbar {",
+        f"  background-color: {ground} !important;",
+        "}",
+        "",
+        "#nav-bar,",
+        "#PersonalToolbar {",
+        f"  background-color: {raised} !important;",
+        "}",
+        "",
+        ".tab-background[selected] {",
+        f"  background-color: {raised} !important;",
+        "}",
+        "",
+        "#urlbar-background {",
+        f"  background-color: {ground} !important;",
+        f"  border-color: {border} !important;",
+        "}",
+    ]) + "\n"
+
+
+def build_waterfox_prefs():
+    """user.js, written whole: Firefox never writes to it."""
+    lines = [
+        "// Written by impasto. github.com/andreumassanet/impasto",
+        "// Read at startup and never written back, which is why it is here",
+        "// and not in prefs.js.",
+        "",
+    ]
+    lines += [f'user_pref("{name}", {value});' for name, value in WATERFOX_PREFS]
+    return "\n".join(lines) + "\n"
+
+
+def write_waterfox_css(colors):
+    """Write userChrome.css and user.js into the active Waterfox profile.
+
+    Waterfox reads them at startup, so changes apply on the next launch.
+    """
+    if not shutil.which("waterfox"):
+        return
+    profile = browser_profile(WATERFOX_PROFILE_ROOT)
+    if not profile:
+        return
+    try:
+        chrome = os.path.join(profile, ZEN_CHROME_DIR)
+        os.makedirs(chrome, exist_ok=True)
+        with open(os.path.join(chrome, ZEN_CHROME_FILE), "w",
+                  encoding="utf-8") as handle:
+            handle.write(build_waterfox_css(colors))
+        with open(os.path.join(profile, ZEN_PREFS_FILE), "w",
+                  encoding="utf-8") as handle:
+            handle.write(build_waterfox_prefs())
+    except OSError as error:
+        sys.stderr.write(f"Cannot write Waterfox's chrome: {error}\n")
 
 
 def push_terminal_font(family):
@@ -3833,11 +4333,14 @@ def push_terminal_font(family):
     for socket_path in sorted(glob.glob(KITTY_SOCKETS)):
         result = subprocess.run(
             [kitten, "@", "--to", f"unix:{socket_path}", "load-config"],
-            capture_output=True, text=True)
+            capture_output=True,
+            text=True,
+        )
         if result.returncode != 0:
             # A stale socket from a closed terminal is normal; keep going.
-            sys.stderr.write(f"{os.path.basename(socket_path)}: "
-                             f"{result.stderr.strip()}\n")
+            sys.stderr.write(
+                f"{os.path.basename(socket_path)}: {result.stderr.strip()}\n"
+            )
 
 
 def saturation(red, green, blue):
@@ -3850,7 +4353,16 @@ def sample_colors(image_path):
     magick = shutil.which("magick") or shutil.which("convert")
     if not magick:
         return []
-    command = [magick, image_path, "-resize", "120x120", "-colors", "24", "-unique-colors", "txt:-"]
+    command = [
+        magick,
+        image_path,
+        "-resize",
+        "120x120",
+        "-colors",
+        "24",
+        "-unique-colors",
+        "txt:-",
+    ]
     try:
         result = subprocess.run(command, capture_output=True, text=True, timeout=20)
     except (OSError, subprocess.SubprocessError) as error:
@@ -3867,12 +4379,16 @@ def pick_accent(swatches):
     candidates = []
     for value in swatches:
         red, green, blue = hex_to_rgb(value)
-        candidates.append({
-            "hex": value.upper(),
-            "r": red, "g": green, "b": blue,
-            "lum": luminance(red, green, blue),
-            "sat": saturation(red, green, blue),
-        })
+        candidates.append(
+            {
+                "hex": value.upper(),
+                "r": red,
+                "g": green,
+                "b": blue,
+                "lum": luminance(red, green, blue),
+                "sat": saturation(red, green, blue),
+            }
+        )
 
     vibrant = [c for c in candidates if c["sat"] > 0.2 and 0.2 < c["lum"] < 0.85]
     if vibrant:
@@ -3926,7 +4442,9 @@ def extract_colors(image_path):
 def link_current_wallpaper(image_path):
     ensure_state_dir()
     try:
-        if os.path.islink(CURRENT_WALLPAPER_LINK) or os.path.exists(CURRENT_WALLPAPER_LINK):
+        if os.path.islink(CURRENT_WALLPAPER_LINK) or os.path.exists(
+            CURRENT_WALLPAPER_LINK
+        ):
             os.remove(CURRENT_WALLPAPER_LINK)
         os.symlink(image_path, CURRENT_WALLPAPER_LINK)
     except OSError as error:
@@ -3934,8 +4452,21 @@ def link_current_wallpaper(image_path):
 
 
 # awww transition types accepted from the shell; anything else becomes a wipe.
-WALLPAPER_TRANSITIONS = ("none", "simple", "fade", "left", "right", "top", "bottom",
-                         "wipe", "wave", "grow", "center", "any", "outer")
+WALLPAPER_TRANSITIONS = (
+    "none",
+    "simple",
+    "fade",
+    "left",
+    "right",
+    "top",
+    "bottom",
+    "wipe",
+    "wave",
+    "grow",
+    "center",
+    "any",
+    "outer",
+)
 
 
 def set_wallpaper(chosen, transition="wipe"):
@@ -3962,8 +4493,15 @@ def set_wallpaper(chosen, transition="wipe"):
     if shutil.which("awww"):
         if transition not in WALLPAPER_TRANSITIONS:
             transition = "wipe"
-        command = ["awww", "img", image_path, "--transition-type", transition,
-                   "--transition-duration", "1"]
+        command = [
+            "awww",
+            "img",
+            image_path,
+            "--transition-type",
+            transition,
+            "--transition-duration",
+            "1",
+        ]
         try:
             result = subprocess.run(command, capture_output=True, timeout=15)
         except (OSError, subprocess.SubprocessError) as error:
@@ -4000,8 +4538,9 @@ def restore_wallpaper():
     if not shutil.which("awww"):
         return 0
     try:
-        result = subprocess.run(["awww", "query"],
-                                capture_output=True, text=True, timeout=5)
+        result = subprocess.run(
+            ["awww", "query"], capture_output=True, text=True, timeout=5
+        )
     except (OSError, subprocess.SubprocessError):
         return 3
     if result.returncode != 0:
@@ -4028,9 +4567,19 @@ def restore_wallpaper():
     if not current:
         return 0
     try:
-        subprocess.run(["awww", "img", current, "--transition-type", "none",
-                        "--outputs", ",".join(blank)],
-                       capture_output=True, timeout=15)
+        subprocess.run(
+            [
+                "awww",
+                "img",
+                current,
+                "--transition-type",
+                "none",
+                "--outputs",
+                ",".join(blank),
+            ],
+            capture_output=True,
+            timeout=15,
+        )
     except (OSError, subprocess.SubprocessError) as error:
         sys.stderr.write(f"awww failed: {error}\n")
         return 1
@@ -4044,11 +4593,13 @@ def set_theme(theme_id):
 
 
 def main():
-    actions = ("list-wallpapers | list-animated | get-current | get-state | "
-               "set-wallpaper <path> [transition] | "
-               "restore | extract-colors [path] | set-theme <id> | "
-               "push-terminal-palette <json> | push-terminal-font <family> | "
-               "apply-vscodium [json] | apply-nautilus | apply-vesktop")
+    actions = (
+        "list-wallpapers | list-animated | get-current | get-state | "
+        "set-wallpaper <path> [transition] | "
+        "restore | extract-colors [path] | set-theme <id> | "
+        "push-terminal-palette <json> | push-terminal-font <family> | "
+        "apply-vscodium [json] | apply-nautilus | apply-vesktop"
+    )
     if len(sys.argv) < 2:
         sys.stderr.write(f"Usage: theme_manager.py {actions}\n")
         sys.exit(1)
@@ -4093,14 +4644,18 @@ def main():
         write_vscodium_theme(colors)
         update_vscodium_settings(vscodium_palette_settings(colors))
         write_zen_css(colors)
+        write_waterfox_css(colors)
         refresh_spotify()
     elif action == "push-terminal-font" and argument:
         push_terminal_font(argument)
     elif action == "push-terminal-ground" and argument:
         push_terminal_ground(argument)
     elif action == "apply-vscodium":
-        colors = json.loads(argument) if argument else (
-            extract_colors(get_current_wallpaper()) or {})
+        colors = (
+            json.loads(argument)
+            if argument
+            else (extract_colors(get_current_wallpaper()) or {})
+        )
         sys.exit(0 if write_vscodium_settings(colors) else 1)
     elif action == "apply-nautilus":
         sys.exit(0 if apply_nautilus() else 1)

@@ -107,6 +107,7 @@ Item {
                 glyph: AudioService.sourceIcon
                 name: "Microphone"
                 value: AudioService.sourceVolume
+                to: 200
                 dimmed: AudioService.sourceMuted
                 available: AudioService.sourceReady
                 onMoved: value => AudioService.setSourceVolume(value)

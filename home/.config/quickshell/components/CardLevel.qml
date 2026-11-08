@@ -25,6 +25,7 @@ RowLayout {
     property string picture: ""
     property string name: ""
     property int value: 0
+    property int to: 100
     property bool dimmed: false
     property bool available: true
 
@@ -92,7 +93,7 @@ RowLayout {
         Layout.fillHeight: true
         enabled: root.available
         from: 0
-        to: 100
+        to: root.to
         stepSize: 1
         value: root.value
         onMoved: root.moved(Math.round(slider.value))
