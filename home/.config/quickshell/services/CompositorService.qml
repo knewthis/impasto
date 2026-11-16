@@ -296,7 +296,8 @@ Singleton {
         { id: "", label: "None" },
         { id: "grp:alt_shift_toggle", label: "Alt + Shift" },
         { id: "grp:win_space_toggle", label: "Super + Space" },
-        { id: "grp:caps_toggle", label: "Caps Lock" }
+        { id: "grp:caps_toggle", label: "Caps Lock" },
+        { id: "grp:shifts_toggle", label: "Shift + Shift" }
     ]
 
     // ── CURSOR ──────────────────────────────────────────────────────────────
